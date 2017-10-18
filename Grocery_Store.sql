@@ -1,26 +1,26 @@
 CREATE DATABASE grocery_store;
 
 CREATE TABLE products (
-	product_id		SERIAL  	PRIMARY KEY NOT NULL,
+	product_id		INT  	PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	product_name 	TEXT 		NOT NULL,
 	description		TEXT,
-	expiration_date	DATE,
+	expiration_date	DATETIME,
 	quantity 		INT 			CHECK(quantity > 0),
-	unit_price 		MONEY,	
+	unit_price 		DECIMAL(13,4),	
 	tax_rate		NUMERIC(5,5) 	DEFAULT 0.08000 					-- a number between 0.00000 and 0.99999 corresponding to a tax rate of 0 to 99.999%
 );
 
 
 CREATE TABLE orders (
-	order_id 			SERIAL 	PRIMARY KEY	NOT NULL,
-	order_date			DATE,
+	order_id 			INT 	PRIMARY KEY	NOT NULL AUTO_INCREMENT,
+	order_date			DATETIME,
 	order_time			TIME(2),
-	total_price			MONEY
+	total_price			DECIMAL(13,4)
 );
 
 -- table used for the products bought in an order
 CREATE TABLE products_in_order (
-	pio_id		SERIAL PRIMARY KEY NOT NULL,
+	pio_id		INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	order_id 	INT REFERENCES orders(order_id),
 	product_id	INT REFERENCES products(product_id),
 	quantity 	INT CHECK(quantity > 0)

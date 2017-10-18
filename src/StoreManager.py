@@ -1,6 +1,11 @@
 
 import tkinter as tk
 from tkinter import *
+#import pymysql.cursors
+#import pymysql
+import MySQLdb
+
+
 
 LARGE_FONT= ("Verdana", 12)
 
@@ -456,7 +461,74 @@ class Order():
 	order_date = StringVar
 	order_time = StringVar
 	total_price = DoubleVar
-	
+
+'''
+	Function to connect to the mysql database 
+'''
+def connect_to_db():
+	db = MySQLdb.connect(	host="localhost",
+							user="root",
+							passwd="root",
+							db="Grocery_Store")
+	cur = db.cursor()
+	return db, cur
+
+'''
+Create the Database 
+Initialize the database with the initial items 
+'''
+def create_tables():
+	db, cur = connect_to_db()
+
+	#Create Tables 
+	createProductsTbl = "CREATE TABLE products (product_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, product_name TEXT NOT NULL, description	TEXT, expiration_date DATETIME, quantity INT CHECK(quantity > 0), unit_price DECIMAL(13,4), tax_rate NUMERIC(5,5) DEFAULT 0.08000);"
+
+	createOrdersTbl = "CREATE TABLE orders (order_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, order_date	DATETIME, order_time TIME(2), total_price	DECIMAL(13,4));"
+
+	createPinOTbl = "CREATE TABLE products_in_order (pio_id	INT PRIMARY KEY NOT NULL AUTO_INCREMENT, order_id INT REFERENCES orders(order_id), product_id INT REFERENCES products(product_id), quantity INT CHECK(quantity > 0));"
+	try:
+		cur.execute(createProductsTbl)
+		cur.execute(createOrdersTbl)
+		cur.execute(createPinOTbl)
+	finally:
+		db.close()
+
+
+def initialize_db():	
+	# String to insert produts into table
+	productsInsert = "INSERT INTO products (product_name, description, expiration_date, quantity, unit_price, tax_rate) VALUES "
+	prd1 = "('Apple','Red Delicious','2017-10-13', 50, 1.75, 0.06000),"
+	prd2 = "('Banana','Contains 10 Bananas', '2017-10-15', 30, 2.00, 0.06000),"
+	prd3 = "('Eggs', 	'One Dozen Eggs', 		'2017-10-17', 40, 2.75, 	0.08000),"
+	prd4 = "('Milk', 	'Whole Milk', 			'2017-10-05', 70, 2.50, 	0.08000),"
+	prd5 = "('Bread', 	'Whole Grain', 			'2017-06-10', 45, 3.00, 	0.06000),"
+	prd6 = "('Cheese', 	'Shredded Cheddar', 	'2017-11-27', 60, 4.00, 	0.08000),"
+	prd7 = "('Steak', 	'Two Pack T-Bones', 	'2017-10-04', 35, 10.00,	0.05000);"
+	productInsertStatement = productsInsert + prd1 + prd2 + prd3 + prd4 + prd5 + prd6 + prd7
+
+	# String to insert orders into databse
+	ordersinsert = "INSERT INTO orders (order_date, order_time, total_price) VALUES "
+	ord1 = "('2017-9-20', '08:00:00', 	13.25),"
+	ord2 = "('2017-9-20', '10:00:00', 	31.75),"
+	ord3 = "('2017-9-21', '15:00:00', 	14.50),"
+	ord4 = "('2017-9-22', '11:00:00', 	21.50),"
+	ord5 = "('2017-9-22', '14:30:00', 	21.00);"
+	orderInsertStatement = ordersinsert + ord1 + ord2 + ord3 + ord4 + ord5
+
+	# String to insert product in orders 
+	prdInOdr = "INSERT INTO products_in_order (order_id, product_id, quantity) VALUES "
+	prdsInOdrStr = "(1, 1, 3),(1, 3, 2),(1, 4, 1),(2, 3, 1),(2, 4, 2),(2, 6, 1),(2, 7, 2),(3, 2, 2),(3, 4, 1),(3, 6, 2),(4, 1, 2),(4, 4, 2),(4, 5, 1),(4, 7, 1),(5, 2, 1),(5, 4, 2),(5, 6, 1);"
+	productsInOrderInsertStatement = prdInOdr + prdsInOdrStr
+
+	try: 
+		cur.execute(productInsertStatement)
+		cur.execute(orderInsertStatement)
+		cur.execute(productsInOrderInsertStatement)
+	finally: 
+		db.close()
+
+
+
 
 # Sample Inventory
 # Product ID, Product Name, Description, Experation Date, Quantity, Unit Price, Tax Rate
