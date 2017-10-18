@@ -1,10 +1,9 @@
 
 import tkinter as tk
 from tkinter import *
-#import pymysql.cursors
-#import pymysql
-import MySQLdb
-
+import pymysql.cursors
+import pymysql
+#import MySQLdb
 
 
 LARGE_FONT= ("Verdana", 12)
@@ -466,37 +465,39 @@ class Order():
 	Function to connect to the mysql database 
 '''
 def connect_to_db():
-	db = MySQLdb.connect(	host="localhost",
-							user="root",
-							passwd="root",
-							db="Grocery_Store")
-	cur = db.cursor()
-	return db, cur
+	connection = pymysql.connect(host='localhost',
+                             user='user',
+                             password='passwd',
+                             db='db',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
+	return connection
 
 '''
 Create the Database 
 Initialize the database with the initial items 
 '''
 def create_tables():
-	db, cur = connect_to_db()
-
-	#Create Tables 
-	createProductsTbl = "CREATE TABLE products (product_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, product_name TEXT NOT NULL, description	TEXT, expiration_date DATETIME, quantity INT CHECK(quantity > 0), unit_price DECIMAL(13,4), tax_rate NUMERIC(5,5) DEFAULT 0.08000);"
-
-	createOrdersTbl = "CREATE TABLE orders (order_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, order_date	DATETIME, order_time TIME(2), total_price	DECIMAL(13,4));"
-
-	createPinOTbl = "CREATE TABLE products_in_order (pio_id	INT PRIMARY KEY NOT NULL AUTO_INCREMENT, order_id INT REFERENCES orders(order_id), product_id INT REFERENCES products(product_id), quantity INT CHECK(quantity > 0));"
+	connection = connect_to_db()
 	try:
-		cur.execute(createProductsTbl)
-		cur.execute(createOrdersTbl)
-		cur.execute(createPinOTbl)
+    	with connection.cursor() as cursor:
+    		createProductsTbl = "CREATE TABLE 'products' ('product_id' INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 'product_name' TEXT NOT NULL, 'description'	TEXT, 'expiration_date' DATETIME, 'quantity' INT, 'unit_price' DECIMAL(13,4), 'tax_rate' NUMERIC(5,5) DEFAULT 0.08000);"
+    		createOrdersTbl = "CREATE TABLE orders ('order_id' INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 'order_date' DATETIME, 'order_time' TIME(2), 'total_price'	DECIMAL(13,4));"
+			createPinOTbl = "CREATE TABLE products_in_order ('pio_id' INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 'order_id' INT REFERENCES orders(order_id), 'product_id' INT REFERENCES products(product_id), quantity INT CHECK(quantity > 0));"
+        	# Create a new record
+        	cursor.execute(createOrdersTbl)
+        	cursor.execute(createOrdersTbl)
+        	cursor.execute(createPinOTbl)
+    	connection.commit()
 	finally:
-		db.close()
+		cursor.close()
+    	connection.close()
 
 
 def initialize_db():	
+	connection = connect_to_db()
 	# String to insert produts into table
-	productsInsert = "INSERT INTO products (product_name, description, expiration_date, quantity, unit_price, tax_rate) VALUES "
+	productInsert = "INSERT INTO products (product_name, description, expiration_date, quantity, unit_price, tax_rate) VALUES "
 	prd1 = "('Apple','Red Delicious','2017-10-13', 50, 1.75, 0.06000),"
 	prd2 = "('Banana','Contains 10 Bananas', '2017-10-15', 30, 2.00, 0.06000),"
 	prd3 = "('Eggs', 	'One Dozen Eggs', 		'2017-10-17', 40, 2.75, 	0.08000),"
@@ -504,7 +505,7 @@ def initialize_db():
 	prd5 = "('Bread', 	'Whole Grain', 			'2017-06-10', 45, 3.00, 	0.06000),"
 	prd6 = "('Cheese', 	'Shredded Cheddar', 	'2017-11-27', 60, 4.00, 	0.08000),"
 	prd7 = "('Steak', 	'Two Pack T-Bones', 	'2017-10-04', 35, 10.00,	0.05000);"
-	productInsertStatement = productsInsert + prd1 + prd2 + prd3 + prd4 + prd5 + prd6 + prd7
+	productsInsertStatement = productsInsert + prd1 + prd2 + prd3 + prd4 + prd5 + prd6 + prd7
 
 	# String to insert orders into databse
 	ordersinsert = "INSERT INTO orders (order_date, order_time, total_price) VALUES "
@@ -521,12 +522,45 @@ def initialize_db():
 	productsInOrderInsertStatement = prdInOdr + prdsInOdrStr
 
 	try: 
-		cur.execute(productInsertStatement)
-		cur.execute(orderInsertStatement)
-		cur.execute(productsInOrderInsertStatement)
+		with connection.cursor() as cursor:
+			cursor.execute(productsInsertStatement)
+			cursor.execute(orderInsertStatement)
+			cursor.execute(productsInOrderInsertStatement)
 	finally: 
 		db.close()
 
+def add_product(product):
+	connection = connect_to_db()
+	try: 
+		with connection.cursor() as cursor:
+			sql = "INSERT INTO 'products' ('product_name', 'description', 'expiration_date','quantity', 'unit_price', 'tax_rate' VALUES (%s, %s, %s, %s,%s,%s)"
+			cursor.execute(sql, (product.name, product.description, product.exp_date, product.quantity, product.price,product.tax_rate))
+			connection.commit()
+	finally:
+		cursor.close()
+		connection.close()
+
+def read_single_product(pid):
+	connection = connect_to_db()
+	try: 
+		with connection.cursor() as cursor:
+			sql = "SELECT '*' FROM 'products' WHERE 'product_id'=%s"
+			cursor.execute(sql,(pid,))
+			result = cursor.fetchone()
+	finally:
+		connection.close()
+	return result
+
+def read_single_order(oid):
+	connection = connect_to_db()
+	try:
+		with connection.cursor() as cursor: 
+			sql = "SELECT '*' FROM 'Orders' WHERE 'order_id'=%s"
+			cursor.execute(sql,(oid,))
+			result = cursor.fetchone() 
+	finally:
+		connection.close()
+	return result;
 
 
 
