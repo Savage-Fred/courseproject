@@ -44,6 +44,8 @@ public class StoreManager {
          */
          switch(opt)
          {
+         	StoreManagerGUI storegui = new StoreManagerGUI();
+         	storegui.displayGUI();
             case 1: // Checkout Customer 
                System.out.println("Checkout Customer ");
                Order currentOrder = new Order();

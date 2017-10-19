@@ -529,6 +529,20 @@ def initialize_db():
     finally: 
         db.close()
 
+#Function to decrease product quanity in the database by 1
+def decrement_product_quantity(pid):
+    connection = connect_to_db()
+
+    sql = "UPDATE 'products' SET 'quantity = quantity - 1' WHERE 'product_id' = (%s)"
+    try: 
+        with connection.cursor() as cursor:
+            cursor.execute(sql, (pid))
+            connection.commit()
+    finally:
+        cursor.close()
+        connection.close()
+
+#Add a product to the database
 def add_product(product):
     connection = connect_to_db()
     try: 
