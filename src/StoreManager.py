@@ -6,6 +6,13 @@ import pymysql
 #import MySQLdb
 
 LARGE_FONT= ("Verdana", 12)
+dbServerName    = "127.0.0.1"
+dbUser          = "will"
+dbPassword      = "will"
+dbName          = "grocery_store"
+charSet         = "utf8mb4"
+cursorType      = pymysql.cursors.DictCursor
+connection      = pymysql.connect(host=dbServerName, user=dbUser, password=dbPassword, db=dbName, charset=charSet,cursorclass=cursorType)
 
 # Main Class for Initilizing and Running Frames (GUI)
 class StoreManagement(tk.Tk):
@@ -471,9 +478,9 @@ class Order():
 #Function to connect to the mysql database 
 def connect_to_db():
     connection = pymysql.connect(host='localhost',
-                             user='user',
-                             password='passwd',
-                             db='db',
+                             user='will',
+                             password='will',
+                             db='grocery_store',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
     return connection
@@ -485,23 +492,61 @@ def create_tables():
     connection = connect_to_db()
     try:
         with connection.cursor() as cursor:
-            createProductsTbl = "CREATE TABLE 'products' ('product_id' INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 'product_name' TEXT NOT NULL, 'description' TEXT, 'expiration_date' DATETIME, 'quantity' INT, 'unit_price' DECIMAL(13,4), 'tax_rate' NUMERIC(5,5) DEFAULT 0.08000);"
-            createOrdersTbl = "CREATE TABLE orders ('order_id' INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 'order_date' DATETIME, 'order_time' TIME(2), 'total_price'  DECIMAL(13,4));"
-            createPinOTbl = "CREATE TABLE products_in_order ('pio_id' INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 'order_id' INT REFERENCES orders(order_id), 'product_id' INT REFERENCES products(product_id), quantity INT CHECK(quantity > 0));"
+            #cursor.execute("DROP TABLE IF EXISTS `products`;")
+            #cursor.execute("DROP TABLE IF EXISTS `orders`;")
+            #cursor.execute("DROP TABLE IF EXISTS `products_in_order`;")
+            #connection.commit()
+            ###### Build the strings 
+            create_tbl = "CREATE TABLE IF NOT EXISTS "
+            prt1 = "products("
+            prt2 = "product_id INT AUTO_INCREMENT PRIMARY KEY, "
+            prt3 = "product_name VARCHAR(30) NOT NULL, "
+            prt4 = "description VARCHAR(30), "
+            prt5 = "expiration_date DATETIME, "
+            prt6 = "quantity INT, "
+            prt7 = "unit_price DECIMAL(13,4), "
+            prt8 = "tax_rate DECIMAL(5,5));"
+            createProductsTbl = create_tbl + prt1 + prt2 + prt3 + prt4 + prt5 + prt6 + prt7 + prt8
+            print(createProductsTbl)
+
+            ort1 = "orders("
+            ort2 = "order_id INT AUTO_INCREMENT PRIMARY KEY, "
+            ort3 = "order_date DATETIME, "
+            ort4 = "order_time TIME, "
+            ort5 = "total_price DECIMAL(13,4));"
+            createOrdersTbl = create_tbl + ort1 + ort2 + ort3 + ort4 + ort5
+            print()
+            print(createOrdersTbl)
+
+            potbl1 = "products_in_order("
+            potbl2 = "pio_id INT AUTO_INCREMENT PRIMARY KEY, "
+            potbl3 = "FOREIGN KEY order_id(order_id) REFERENCES orders(order_id), "
+            potbl4 = "FOREIGN KEY product_id(product_id) REFERENCES products(product_id), "
+            potbl5 = "quantity INT);"
+            createPinOTbl = create_tbl + potbl1 + potbl2 + potbl3 + potbl4 + potbl5
+
+            print()
+            print(createPinOTbl)
+            print('\n' * 10)
             # Create a new record
+            print()
             cursor.execute(createOrdersTbl)
+            connection.commit()
             cursor.execute(createOrdersTbl)
+            connection.commit()
             cursor.execute(createPinOTbl)
-        connection.commit()
-    finally:
-        cursor.close()
+            connection.commit()
+    except Exception as e:
+        print("Exeception occured:{}".format(e))
+    finally: 
         connection.close()
 
 
-def initialize_db(): 
-    connection = connect_to_db()
+def initialize_db():
+    #connect_to_db()
     # String to insert produts into table
-    productInsert = "INSERT INTO products (product_name, description, expiration_date, quantity, unit_price, tax_rate) VALUES "
+    connection      = pymysql.connect(host=dbServerName, user=dbUser, password=dbPassword, db=dbName, charset=charSet,cursorclass=cursorType)
+    productsInsert = "INSERT INTO products (product_name, description, expiration_date, quantity, unit_price, tax_rate) VALUES "
     prd1 = "('Apple',   'Red Delicious',        '2017-10-13', 50, 1.75,     0.06000),"
     prd2 = "('Banana',  'Contains 10 Bananas',  '2017-10-15', 30, 2.00,     0.06000),"
     prd3 = "('Eggs',    'One Dozen Eggs',       '2017-10-17', 40, 2.75,     0.08000),"
@@ -542,32 +587,32 @@ def initialize_db():
 
 #Update Product Price 
 def update_product_price(pid, price_in):
-    connection = connect_to_db():
+    #connection = connect_to_db()
     sql = "UPDATE 'products' SET 'price' = (%s) WHERE 'product_id' = (%s)"
     try:
         with connection.cursor() as cursor:
             cursor.execute(sql, (str(price_in), str(pid)))
             connection.commit()
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 #Update the product quantiy with a new quanity. 
 def update_product_quanity(pid, quanity_in):
-    connection = connect_to_db():
+    #connection = connect_to_db()
     sql = "UPDATE 'products' SET 'quanity' = (%s) WHERE 'product_id' = (%s)"
     try:
         with connection.cursor() as cursor:
             cursor.execute(sql, (str(quanity_in), str(pid)))
             connection.commit()
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 #Function to decrease product quanity in the database by 1
 def decrement_product_quantity(pid):
-    connection = connect_to_db()
+    #connection = connect_to_db()
     pidstring = str(pid)
     sql = "UPDATE 'products' SET 'quantity' = 'quantity' - 1 WHERE 'product_id' = (%s)"
     try: 
@@ -580,7 +625,7 @@ def decrement_product_quantity(pid):
 
 #Add a product to the database
 def add_product(product):
-    connection = connect_to_db()
+    #connection = connect_to_db()
 
     try: 
         with connection.cursor() as cursor:
@@ -593,7 +638,7 @@ def add_product(product):
 
 #Read a single product and return it 
 def read_single_product(pid):
-    connection = connect_to_db()
+    #connection = connect_to_db()
     try: 
         with connection.cursor() as cursor:
             sql = "SELECT '*' FROM 'products' WHERE 'product_id'=%s"
@@ -610,7 +655,7 @@ def read_single_product(pid):
 
 #Read a single order and return it 
 def read_single_order(oid):
-    connection = connect_to_db()
+    #connection = connect_to_db()
     try:
         with connection.cursor() as cursor: 
             sql = "SELECT '*' FROM 'Orders' WHERE 'order_id'=%s"
@@ -680,5 +725,8 @@ CartOrders = (
 #############################################################################
 #~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#
 
+
 app = StoreManagement()
+create_tables()
+#initialize_db()
 app.mainloop()

@@ -14,7 +14,7 @@ CREATE TABLE products (
 CREATE TABLE orders (
 	order_id 			INT 	PRIMARY KEY	NOT NULL AUTO_INCREMENT,
 	order_date			DATETIME,
-	order_time			TIME(2),
+	order_time			TIME,
 	total_price			DECIMAL(13,4)
 );
 
@@ -24,7 +24,7 @@ CREATE TABLE products_in_order (
 	order_id 	INT REFERENCES orders(order_id),
 	product_id	INT REFERENCES products(product_id),
 	quantity 	INT CHECK(quantity > 0)
-);
+);)
 
 
 -- SAMPLE DATA 
