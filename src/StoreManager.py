@@ -5,7 +5,6 @@ import pymysql.cursors
 import pymysql
 #import MySQLdb
 
-
 LARGE_FONT= ("Verdana", 12)
 
 # Main Class for Initilizing and Running Frames (GUI)
@@ -461,9 +460,15 @@ class Order():
     order_time = StringVar
     total_price = DoubleVar
 
-'''
-    Function to connect to the mysql database 
-'''
+
+#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#
+#############################################################################
+########################     DATABASE STUFF BELOW    ########################
+#############################################################################
+#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#
+
+
+#Function to connect to the mysql database 
 def connect_to_db():
     connection = pymysql.connect(host='localhost',
                              user='user',
@@ -473,10 +478,9 @@ def connect_to_db():
                              cursorclass=pymysql.cursors.DictCursor)
     return connection
 
-'''
-Create the Database 
-Initialize the database with the initial items 
-'''
+############################################################################
+######################  Initialize the Database     ########################
+############################################################################
 def create_tables():
     connection = connect_to_db()
     try:
@@ -494,7 +498,7 @@ def create_tables():
         connection.close()
 
 
-def initialize_db():    
+def initialize_db(): 
     connection = connect_to_db()
     # String to insert produts into table
     productInsert = "INSERT INTO products (product_name, description, expiration_date, quantity, unit_price, tax_rate) VALUES "
@@ -526,17 +530,49 @@ def initialize_db():
             cursor.execute(productsInsertStatement)
             cursor.execute(orderInsertStatement)
             cursor.execute(productsInOrderInsertStatement)
+        connection.commit()
     finally: 
-        db.close()
+        cursor.close()
+        connection.close()
+
+
+############################################################################
+###################     PRODUCT TABLE FUNCTIONS     ########################
+############################################################################
+
+#Update Product Price 
+def update_product_price(pid, price_in):
+    connection = connect_to_db():
+    sql = "UPDATE 'products' SET 'price' = (%s) WHERE 'product_id' = (%s)"
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(sql, (str(price_in), str(pid)))
+            connection.commit()
+        finally:
+            cursor.close()
+            connection.close()
+
+#Update the product quantiy with a new quanity. 
+def update_product_quanity(pid, quanity_in):
+    connection = connect_to_db():
+    sql = "UPDATE 'products' SET 'quanity' = (%s) WHERE 'product_id' = (%s)"
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(sql, (str(quanity_in), str(pid)))
+            connection.commit()
+        finally:
+            cursor.close()
+            connection.close()
+
 
 #Function to decrease product quanity in the database by 1
 def decrement_product_quantity(pid):
     connection = connect_to_db()
-
-    sql = "UPDATE 'products' SET 'quantity = quantity - 1' WHERE 'product_id' = (%s)"
+    pidstring = str(pid)
+    sql = "UPDATE 'products' SET 'quantity' = 'quantity' - 1 WHERE 'product_id' = (%s)"
     try: 
         with connection.cursor() as cursor:
-            cursor.execute(sql, (pid))
+            cursor.execute(sql, (pidstring))
             connection.commit()
     finally:
         cursor.close()
@@ -545,32 +581,40 @@ def decrement_product_quantity(pid):
 #Add a product to the database
 def add_product(product):
     connection = connect_to_db()
+
     try: 
         with connection.cursor() as cursor:
             sql = "INSERT INTO 'products' ('product_name', 'description', 'expiration_date','quantity', 'unit_price', 'tax_rate' VALUES (%s, %s, %s, %s,%s,%s)"
-            cursor.execute(sql, (product.name, product.description, product.exp_date, product.quantity, product.price,product.tax_rate))
+            cursor.execute(sql, (product.name, product.description, product.exp_date, str(product.quantity), str(product.price), str(product.tax_rate)))
             connection.commit()
     finally:
         cursor.close()
         connection.close()
 
+#Read a single product and return it 
 def read_single_product(pid):
     connection = connect_to_db()
     try: 
         with connection.cursor() as cursor:
             sql = "SELECT '*' FROM 'products' WHERE 'product_id'=%s"
-            cursor.execute(sql,(pid,))
+            cursor.execute(sql,(str(pid),))
             result = cursor.fetchone()
     finally:
         connection.close()
     return result
 
+
+############################################################################
+######################      ORDER TABLE FUNCTIONS      #####################
+############################################################################
+
+#Read a single order and return it 
 def read_single_order(oid):
     connection = connect_to_db()
     try:
         with connection.cursor() as cursor: 
             sql = "SELECT '*' FROM 'Orders' WHERE 'order_id'=%s"
-            cursor.execute(sql,(oid,))
+            cursor.execute(sql,(str(oid),))
             result = cursor.fetchone() 
     finally:
         connection.close()
@@ -578,6 +622,11 @@ def read_single_order(oid):
 
 
 
+
+
+############################################################################
+##########################  SAMPLE DATA IN PYTHON
+############################################################################
 # Sample Inventory
 # Product ID, Product Name, Description, Experation Date, Quantity, Unit Price, Tax Rate
 
@@ -625,9 +674,11 @@ CartOrders = (
 )
     
     
-
-
-
+#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#
+#############################################################################
+############################    DRIVER    ###################################
+#############################################################################
+#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#
 
 app = StoreManagement()
 app.mainloop()
