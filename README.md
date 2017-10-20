@@ -2,6 +2,8 @@ Course project for COMP 3700
 
 Group Members: Will McCarty & Eric Deaton
 
+Application Name: StoreManager_v3.py
+
 Programming Language: Python ver 2.7
 
 Database Name: groccery_store
