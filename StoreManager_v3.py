@@ -6,7 +6,6 @@ from Tkinter import *
 import tkMessageBox
 import pymysql
 
-#import MySQLdb
 
 LARGE_FONT= ("Verdana", 12)
 
@@ -79,6 +78,7 @@ class CheckOutPage(tk.Frame):
 
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
+		
 		label = tk.Label(self, text="Checkout Customer", font=LARGE_FONT)
 		label.grid(row = 0, column = 1)
 		
@@ -92,8 +92,9 @@ class CheckOutPage(tk.Frame):
 		
 		label1.config(text=cart_total)
 
+		
 		def updateList(event):
-			print(order_count)
+			print("Order Count: ", order_count)
 			cart = None
 			cart = read_single_order(order_count)
 			list1.delete(0, END)
@@ -111,18 +112,15 @@ class CheckOutPage(tk.Frame):
 				items = (product_name, quantity, price)
 				list1.insert(END, items)
 			
-			total = calculateOrder(order_count)	
-			
-			print(order_count)		
+			total = calculateOrder(order_count)				
+			print("Order Count: ", order_count)		
 			cart_total = ("Amount Due: $" + str(total))
-			print(cart_total)
-			label1.config(text=cart_total)
-			controller.show_frame(AddItemToCartPage)
-			
+			print("Cart Total: ", cart_total)
+			label1.config(text=cart_total)	
 		
 	
 		
-		button1 = tk.Button(self, text="Add Item")
+		button1 = tk.Button(self, text="Add Item", command=lambda: controller.show_frame(AddItemToCartPage))
 		button1.grid(row = 2, column = 0)
 		button1.bind("<Button-1>", updateList)
 
@@ -130,7 +128,11 @@ class CheckOutPage(tk.Frame):
 		button2.grid(row = 2, column = 1)
 		
 		button3 = tk.Button(self, text="Main Menu", command=lambda: controller.show_frame(MainMenuPage))
-		button3.grid(row = 2, column = 2)
+		button3.grid(row = 15, column = 2)
+		
+		button4 = tk.Button(self, text="Refresh")
+		button4.grid(row = 2, column = 2)
+		button4.bind("<Button-1>", updateList)
 		
 		# Define ListBox 
 				
@@ -252,13 +254,12 @@ class AddItemToCartPage(tk.Frame):
 				product_quantity = product["quantity"]		
 				item = (product_id, product_name, product_quantity, product_price)
 				list1.insert(END, item)
-				
+			controller.show_frame(AddItemToCartPage)
 			clearEntries(self)
-		
-		updateList(self)			
+					
 		
 		def addItem(event):
-			print("Add Item")
+			print("Product Added to Cart ")
 
 			product_id = int(entry1.get())
 			quantity = int(entry2.get())
@@ -275,7 +276,7 @@ class AddItemToCartPage(tk.Frame):
 				quantity = int(entry2.get())
 				product = read_single_product(int(entry1.get()))
 				quantity_rem = int(product["quantity"])
-				print(quantity_rem)
+				print("Quantity Rem: ", quantity_rem)
 				if (quantity > quantity_rem):
 					raise ValueError
 				if (quantity_rem < 1):
@@ -340,7 +341,7 @@ class CreditCardPaymentPage(tk.Frame):
 		
 		global order_count 
 		total = calculateOrder(order_count)
-		print(total)
+		print("Total:", total)
 		label3 = tk.Label(self, text = "Amount Due: %s"%total)
 		label3.grid(row = 1, column = 0, sticky = E)
 				
@@ -367,16 +368,24 @@ class CreditCardPaymentPage(tk.Frame):
 					raise ValueError
 				else:
 					label4 = tk.Label(self, text = "Thank you for your purchase")
-					label4.grid(row = 4, column = 1)
-					
+					label4.grid(row = 4, column = 0)
+					print("Made it ")
 					button1 = tk.Button(self, text="Main Menu")
 					button1.grid(row = 5, column = 1)
 					button1.bind("<Button-1>", clearEntries)
-					button1.destroy()
-					label4.destroy()
 					
 			except ValueError:
 				tkMessageBox.showwarning("Invalid Card Number", "Please enter a valid credit card number")
+				
+		def refreshPrice(event):
+			total = float(calculateOrder(order_count))
+			label3.config(text = ("Amount Due: $%s" % total))
+			controller.show_frame(CreditCardPaymentPage)
+				
+		# Button that Calculates Change
+		button4 = tk.Button(self, text="Refresh")
+		button4.bind("<Button-1>", refreshPrice)
+		button4.grid(row = 1, column = 1, sticky = E)
 		
 		button2 = tk.Button(self, text="Pay")
 		button2.bind("<Button-1>", processPayment)
@@ -404,6 +413,7 @@ class CashPaymentPage(tk.Frame):
 		label2 = tk.Label(self, text="Cash Amount:")
 		label2.grid(row = 2, column = 0, sticky = E)
 		
+		
 		# User inputs Cash amount recieved 
 		entry1 = tk.Entry(self, bd = 2)
 		entry1.grid(row = 2, column = 1, sticky = E)
@@ -427,25 +437,34 @@ class CashPaymentPage(tk.Frame):
 					raise ValueError
 				else:
 					change = cashRecieved - total
-					label4 = tk.Label(self, text = "$ %s" % change)
-					label4.grid(row = 3, column = 1, sticky = E)
+					label5 = tk.Label(self, text = "$ %s" % change)
+					label5.grid(row = 4, column = 2, sticky = E)
 					
 					# Button that directs user back to Main Menu
 					button1 = tk.Button(self, text="Main Menu")
-					button1.grid(row = 4, column = 2, sticky = E)
+					button1.grid(row = 5, column = 2, sticky = E)
 					button1.bind("<Button-1>", clearEntries)
-					
-					button1.destroy()
-					label4.destroy()
-					
+		
 			except ValueError:
-				tkMessageBox.showwarning("Invalid Input", "Please enter a valid number")   
+				tkMessageBox.showwarning("Invalid Input", "Please enter a valid number") 
+			 
 				
-				
+		def refreshPrice(event):
+			total = float(calculateOrder(order_count))
+			label3.config(text = "Cart Total: $%s" % total)
+			controller.show_frame(CashPaymentPage)
+
+		
 		# Button that Calculates Change
 		button2 = tk.Button(self, text="Calculate")
 		button2.bind("<Button-1>", calculate)
-		button2.grid(row = 4, column = 1, sticky = E)
+		button2.grid(row = 4, column = 1, sticky = E) 
+		
+		# Button that Calculates Change
+		button4 = tk.Button(self, text="Refresh")
+		button4.bind("<Button-1>", refreshPrice)
+		button4.grid(row = 4, column = 0, sticky = E)
+						
 		
 		
 	
@@ -684,6 +703,8 @@ class ManageCurrentInventoryPage(tk.Frame):
 			except ValueError:
 				tkMessageBox.showwarning("Invalid Product ID","Please enter a valid number for the Product ID")
 				
+			
+		
 		label2 = tk.Label(self, text="Product ID:", font=LARGE_FONT)
 		label2.grid(row=12, column=1)
 		
@@ -696,6 +717,10 @@ class ManageCurrentInventoryPage(tk.Frame):
 
 		button2 = tk.Button(self, text="Item Management Menu", command=lambda: controller.show_frame(ItemManagementPage))
 		button2.grid(row = 14, column = 2)
+		
+		button4 = tk.Button(self, text="Refresh")
+		button4.grid(row = 14, column = 3)
+		button4.bind("<Button-1>", updateList)
 		
 		
 class Customer():
@@ -738,11 +763,10 @@ def calculateOrder(order_id):
 		unit_price = product["unit_price"]
 		price = unit_price * quantity
 		total = total + price
+		print("pass")
 	return total
 		
-		
-		
-		
+	
 		
 	
 
@@ -1001,7 +1025,6 @@ def add_order(oid):
 
 
 
-
 #~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#
 #############################################################################
 ############################    DRIVER    ###################################
@@ -1009,7 +1032,8 @@ def add_order(oid):
 #~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#~#
 
 
-app = StoreManagement()
+global app
 create_tables()
 initialize_db()
+app = StoreManagement()
 app.mainloop()
