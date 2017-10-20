@@ -763,7 +763,6 @@ def calculateOrder(order_id):
 		unit_price = product["unit_price"]
 		price = unit_price * quantity
 		total = total + price
-		print("pass")
 	return total
 		
 	
