@@ -374,6 +374,8 @@ class CreditCardPaymentPage(tk.Frame):
 					button1.grid(row = 5, column = 1)
 					button1.bind("<Button-1>", clearEntries)
 					
+					#button1.destroy()
+					
 			except ValueError:
 				tkMessageBox.showwarning("Invalid Card Number", "Please enter a valid credit card number")
 				
@@ -427,23 +429,29 @@ class CashPaymentPage(tk.Frame):
 			order_count = 1 + order_count
 			controller.show_frame(MainMenuPage)
 			print(order_count)
+			label5.config(text = "")
 			entry1.delete(0, END) 
 				  
 		
 		def calculate(event):
 			try:
 				cashRecieved = float(entry1.get())
+				total = float(calculateOrder(order_count))
 				if (cashRecieved < total):
 					raise ValueError
 				else:
 					change = cashRecieved - total
-					label5 = tk.Label(self, text = "$ %s" % change)
+					label5.config(text = str("$ %s" % change))
 					label5.grid(row = 4, column = 2, sticky = E)
 					
 					# Button that directs user back to Main Menu
 					button1 = tk.Button(self, text="Main Menu")
 					button1.grid(row = 5, column = 2, sticky = E)
 					button1.bind("<Button-1>", clearEntries)
+					
+				
+
+
 		
 			except ValueError:
 				tkMessageBox.showwarning("Invalid Input", "Please enter a valid number") 
@@ -453,7 +461,8 @@ class CashPaymentPage(tk.Frame):
 			total = float(calculateOrder(order_count))
 			label3.config(text = "Cart Total: $%s" % total)
 			controller.show_frame(CashPaymentPage)
-
+	
+		label5 = tk.Label(self, text = "")
 		
 		# Button that Calculates Change
 		button2 = tk.Button(self, text="Calculate")
