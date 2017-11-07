@@ -704,7 +704,7 @@ class ManageCurrentInventoryPage(tk.Frame):
 					controller.show_frame(ManageCurrentInventoryPage)
 					raise ValueError
 				else:
-					global product_id
+					#global product_id
 					product_id = int(entry1.get())
 					controller.show_frame(EditItemToInventoryPage)
 					updateList(self)
