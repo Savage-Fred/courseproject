@@ -465,7 +465,7 @@ public class OrderController {
  */
 public class ProductModel {
 	////////////////////////////////////
-	////// Fields
+	////// 	Fields
 	////////////////////////////////////
 	private int 	productID;
 	private String 	productName;
@@ -475,7 +475,7 @@ public class ProductModel {
 	private Date 	productExpirationDate;
 
 	////////////////////////////////////
-	////// Constructors 
+	////// 	Constructors 
 	////////////////////////////////////
 	/**
 	 * Default Constructor 
@@ -516,7 +516,7 @@ public class ProductModel {
 
 
 	////////////////////////////////////
-	/////// METHODS 
+	/////// 	METHODS 
 	////////////////////////////////////
 
 
@@ -545,16 +545,9 @@ public class ProductModel {
 	public void setProductPrice(double price) { this.productPrice = price;}
 
 	/**
-	 * Set tax rate. Check if tax rate is valid 
 	 * @param taxrate
 	 */
-	public void setProductTaxRate(double tax) {
-		if (tax > 1.00 || tax < 0) {
-			System.out.println("invalid tax rate.");
-		} else {
-			this.productTaxRate = tax;
-		}
-	}
+	public void setProductTaxRate(double tax) {this.productTaxRate = tax;}
 
 	/**
 	 * @param exp date
@@ -563,7 +556,7 @@ public class ProductModel {
 
 
 	////////////////////////////////////
-	/////// Getters
+	/////// 	Getters
 	////////////////////////////////////
 	/**
 	 * @return product ID
@@ -594,17 +587,109 @@ public class ProductModel {
 	 * @return expiration date
 	 */ 
 	public Date getProductExpirationDate() { return this.productExpirationDate; }
+}
 
-
+/**
+ * ProductView displays the Product
+ *
+ * @author William McCarty
+ * @version 1.0
+ */
+public class ProductView extends JFrame {
+	/**
+	 * Display the product information 
+	 */ 
+	public void displayProduct(){/** Do stuff here */}
 }
 
 
 
 
 
+/**
+ * 
+ * 
+ * @author William McCarty
+ * @version 1.0
+ */
+public class ProductController {
+	////////////////////////////////////
+	/////// 	Fields
+	////////////////////////////////////
+	private ProductView pview;
+	private ProductModel pmodel;
+
+	/**
+	 * @param pid
+	 */
+	public void setProductID(int pid) { this.pmodel.setProductID(pid);}
+
+	/**
+	 * @param product name
+	 */
+	public void setProductName(String name) { this.pmodel.setProductName(name);}
+
+	/**
+	 * @param description
+	 */
+	public void setProductDescription(String desc) { this.pmodel.setProductDescription(desc);}
+
+	/**
+	 * @param price
+	 */
+	public void setProductPrice(double price) { this.pmodel.setProductPrice(price);}
+
+	/**
+	 * Set tax rate. Check if tax rate is valid 
+	 * @param taxrate
+	 */
+	public void setProductTaxRate(double tax) {
+		if (tax > 1.00 || tax < 0) {
+			System.out.println("invalid tax rate.");
+		} else {
+			this.pmodel.setProductTaxRate(tax);
+		}
+	}
+
+	/**
+	 * @param exp date
+	 */
+	public void setProductExpirationDate(Date d) { this.pmodel.setProductExpirationDate(d); }
 
 
+	////////////////////////////////////
+	/////// Getters
+	////////////////////////////////////
+	/**
+	 * @return product ID
+	 */ 
+	public int getProductID() { return this.pmodel.getProductID(); }
 
+	/**
+	 * @return name
+	 */ 
+	public String getProductName() { return this.pmodel.getProductName(); }
+
+	/**
+	 * @return description
+	 */ 
+	public String getProductDescription() { return this.pmodel.getProductDescription(); }
+
+	/**
+	 * @return price
+	 */ 
+	public double getProductPrice() { return this.pmodel.getProductPrice(); }
+
+	/**
+	 * @return tax rate
+	 */ 
+	public double getProductTaxRate() { return this.pmodel.getProductTaxRate(); }
+
+	/**
+	 * @return expiration date
+	 */ 
+	public Date getProductExpirationDate() { return this.pmodel.getProductExpirationDate(); }
+}
 
 
 
