@@ -2,31 +2,47 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-package grocerystore;
 
 public class CheckoutController implements ActionListener {
-    private CheckoutScreen view;
+    private CheckoutView view;
     private DataAdapter dataAdapter; // to save and load product
-    private Order order = null;
+    private OrderModel order = null;
 
-    public CheckoutController(CheckoutScreen view, DataAdapter dataAdapter) {
+    public CheckoutController(CheckoutView view, DataAdapter dataAdapter) {
         this.dataAdapter = dataAdapter;
         this.view = view;
 
-        view.getBtnAdd().addActionListener(this);
-        view.getBtnPay().addActionListener(this);
+        //view.getBtnAdd().addActionListener(this);
+        //view.getBtnPay().addActionListener(this);
 
-        order = new Order();
+        order = new OrderModel();
 
     }
 
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == view.getBtnAdd())
+        /*if (e.getSource() == view.getBtnAdd())
             addProduct();
         else
         if (e.getSource() == view.getBtnPay())
             saveOrder();
+            */
+    }
+
+    public void loadPayment() {
+
+    }
+
+    public void loadLoyaltyProgram() {
+
+    }
+
+    public void loadManualEntry() {
+
+    }
+
+    public void loadClose() {
+
     }
 
     private void saveOrder() {
@@ -34,8 +50,9 @@ public class CheckoutController implements ActionListener {
     }
 
     private void addProduct() {
+        /*
         String id = JOptionPane.showInputDialog("Enter ProductID: ");
-        Product product = dataAdapter.loadProduct(Integer.parseInt(id));
+        ProductModel product = dataAdapter.loadProduct(Integer.parseInt(id));
         if (product == null) {
             JOptionPane.showMessageDialog(null, "This product does not exist!");
             return;
@@ -70,6 +87,7 @@ public class CheckoutController implements ActionListener {
         this.view.addRow(row);
         this.view.getLabTotal().setText("Total: $" + order.getTotalCost());
         this.view.invalidate();
+        */
     }
 
 }

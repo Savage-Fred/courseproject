@@ -7,18 +7,18 @@ public class DataAdapter {
         this.connection = connection;
     }
 
-    public Product loadProduct(int id) {
+    public ProductModel loadProduct(int id) {
         try {
             String query = "SELECT * FROM Product WHERE ProductID = " + id;
 
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {
-                Product product = new Product();
+                ProductModel product = new ProductModel();
                 product.setProductID(resultSet.getInt(1));
-                product.setName(resultSet.getString(2));
-                product.setPrice(resultSet.getDouble(3));
-                product.setQuantity(resultSet.getDouble(4));
+                product.setProductName(resultSet.getString(2));
+                product.setProductPrice(resultSet.getDouble(3));
+                product.setProductQuantity(resultSet.getDouble(4));
                 resultSet.close();
                 statement.close();
 
@@ -32,7 +32,7 @@ public class DataAdapter {
         return null;
     }
 
-    public boolean saveProduct(Product product) {
+    public boolean saveProduct(ProductModel product) {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Product WHERE ProductID = ?");
             statement.setInt(1, product.getProductID());
@@ -41,16 +41,16 @@ public class DataAdapter {
 
             if (resultSet.next()) { // this product exists, update its fields
                 statement = connection.prepareStatement("UPDATE Product SET Name = ?, Price = ?, Quantity = ? WHERE ProductID = ?");
-                statement.setString(1, product.getName());
-                statement.setDouble(2, product.getPrice());
-                statement.setDouble(3, product.getQuantity());
+                statement.setString(1, product.getProductName());
+                statement.setDouble(2, product.getProductPrice());
+                statement.setDouble(3, product.getProductQuantity());
                 statement.setInt(4, product.getProductID());
             }
             else { // this product does not exist, use insert into
                 statement = connection.prepareStatement("INSERT INTO Product VALUES (?, ?, ?, ?)");
-                statement.setString(2, product.getName());
-                statement.setDouble(3, product.getPrice());
-                statement.setDouble(4, product.getQuantity());
+                statement.setString(2, product.getProductName());
+                statement.setDouble(3, product.getProductPrice());
+                statement.setDouble(4, product.getProductQuantity());
                 statement.setInt(1, product.getProductID());
             }
             statement.execute();
@@ -65,18 +65,18 @@ public class DataAdapter {
         }
     }
 
-    public Order loadOrder(int id) {
+    public OrderModel loadOrder(int id) {
         try {
-            Order order = null;
+            OrderModel order = null;
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Order WHERE OrderID = " + id);
 
             if (resultSet.next()) {
-                order = new Order();
+                order = new OrderModel();
                 order.setOrderID(resultSet.getInt("OrderID"));
-                order.setCustomerName(resultSet.getString("Customer"));
-                order.setTotalCost(resultSet.getDouble("TotalCost"));
-                order.setDate(resultSet.getDate("OrderDate"));
+                order.setCustomer(resultSet.getString("Customer"));
+                order.setTotalPrice(resultSet.getDouble("TotalCost"));
+                order.setOrderDate(resultSet.getDate("OrderDate"));
                 resultSet.close();
                 statement.close();
             }
@@ -102,13 +102,13 @@ public class DataAdapter {
         }
     }
 
-    public boolean saveOrder(Order order) {
+    public boolean saveOrder(OrderModel order) {
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO Order VALUES (?, ?, ?, ?, ?)");
             statement.setInt(1, order.getOrderID());
-            statement.setDate(2, order.getDate());
-            statement.setString(3, order.getCustomerName());
-            statement.setDouble(4, order.getTotalCost());
+            statement.setDate(2, order.getOrderDate());
+            statement.setString(3, order.getCustomer());
+            statement.setDouble(4, order.getTotalPrice());
             statement.setDouble(5, order.getTotalTax());
 
             statement.execute();    // commit to the database;
@@ -133,7 +133,7 @@ public class DataAdapter {
         }
     }
 
-    public User loadUser(String username, String password) {
+    public UserModel loadUser(String username, String password) {
         try {
 
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM User WHERE UserName = ? AND Password = ?");
@@ -141,12 +141,12 @@ public class DataAdapter {
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                User user = new User();
+                UserModel user = new UserModel();
                 user.setUserID(resultSet.getInt("UserID"));
-                user.setUserName(resultSet.getString("UserName"));
+                user.setName(resultSet.getString("UserName"));
                 user.setPassword(resultSet.getString("Password"));
                 user.setDisplayName(resultSet.getString("DisplayName"));
-                user.setManager(resultSet.getBoolean("IsManager"));
+                user.setIsManager(resultSet.getBoolean("IsManager"));
                 resultSet.close();
                 statement.close();
 

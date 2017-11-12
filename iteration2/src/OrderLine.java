@@ -1,4 +1,3 @@
-package grocerystore;
 
 public class OrderLine {
 
