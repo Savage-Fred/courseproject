@@ -1,6 +1,7 @@
 import javax.swing.*;
 
 public class AddItemInventoryView extends JFrame {
+
     private JLabel addItemInventoryLabel;
     private JLabel itemNameLabel;
     private JLabel itemPriceLabel;
@@ -16,6 +17,9 @@ public class AddItemInventoryView extends JFrame {
     private JButton closeButton;
 
     public AddItemInventoryView() {
+        this.setTitle("Store Manager");
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
+        this.setSize(500, 200);
 
     }
 

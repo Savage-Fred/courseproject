@@ -11,6 +11,9 @@ public class PaymentView extends JFrame {
     private JButton closeButton;
 
     public PaymentView() {
+        this.setTitle("Store Manager");
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
+        this.setSize(500, 200);
 
     }
 

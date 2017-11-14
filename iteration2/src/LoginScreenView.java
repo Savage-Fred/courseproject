@@ -5,14 +5,34 @@ import java.awt.image.*;
 
 public class LoginScreenView extends JFrame {
 
-    private JLabel storeLabel;
+    private JLabel storeLabel = new JLabel("Login");
 
-    private JTextField usernameField;
-    private JTextField passwordField;
+    private JTextField usernameField = new JTextField(30);
+    private JTextField passwordField = new JTextField(30);
 
-    private JButton loginButton;
+    private JButton loginButton = new JButton("Login");
 
     public LoginScreenView(){
+        this.setTitle("Store Manager");
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
+        this.setSize(500, 200);
+
+        JPanel panelUsername = new JPanel();
+        panelUsername.add(new JLabel("Username:"));
+        panelUsername.add(usernameField);
+        usernameField.setHorizontalAlignment(JTextField.RIGHT);
+        this.getContentPane().add(panelUsername);
+
+        JPanel panelPassword = new JPanel();
+        panelPassword.add(new JLabel("Password:"));
+        panelPassword.add(passwordField);
+        passwordField.setHorizontalAlignment(JTextField.RIGHT);
+        this.getContentPane().add(panelPassword);
+
+        JPanel panelButton = new JPanel();
+        panelButton.add(loginButton);
+        this.getContentPane().add(panelButton);
+
 
     }
 

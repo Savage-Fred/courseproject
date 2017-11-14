@@ -10,22 +10,36 @@ public class UserSettingsController implements ActionListener  {
         this.userSettingsMenuView = view;
         this.dataAdapter = data;
 
+        userSettingsMenuView.getChangePasswordButton().addActionListener(this);
+        userSettingsMenuView.getChangePictureButton().addActionListener(this);
+        userSettingsMenuView.getCloseButton().addActionListener(this);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == userSettingsMenuView.getChangePictureButton()) {
+            loadChangePicture();
+        } else if (e.getSource() == userSettingsMenuView.getChangePasswordButton()) {
+            loadChangePassword();
+        } else if (e.getSource() == userSettingsMenuView.getCloseButton()) {
+            loadClose();
+        }
 
     }
 
     public void loadChangePassword() {
+        Application.getInstance().getPhotoSettingsView().setVisible(true);
 
     }
 
     public void loadChangePicture() {
+        Application.getInstance().getPhotoSettingsView().setVisible(true);
 
     }
 
     public void loadClose() {
+        Application.getInstance().getLoginScreenView().setVisible(true);
 
     }
 

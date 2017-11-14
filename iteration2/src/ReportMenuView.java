@@ -9,6 +9,9 @@ public class ReportMenuView extends JFrame {
     private JButton closeButton;
 
     public ReportMenuView() {
+        this.setTitle("Store Manager");
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
+        this.setSize(500, 200);
 
     }
 

@@ -15,6 +15,9 @@ public class AddNewUserView extends JFrame {
     private JButton closeButton;
 
     public AddNewUserView() {
+        this.setTitle("Store Manager");
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
+        this.setSize(500, 200);
 
     }
 
