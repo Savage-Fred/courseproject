@@ -1,17 +1,24 @@
 import javax.swing.*;
 
 public class ReportMenuView extends JFrame {
-    private JLabel reportMenuLabel;
+    private JLabel reportMenuLabel = new JLabel("Report Menu");
 
-    private JButton businessReportButton;
-    private JButton employeeReportButton;
-    private JButton tpsReportButton;
-    private JButton closeButton;
+    private JButton businessReportButton = new JButton("Business Report");
+    private JButton employeeReportButton = new JButton("Employee Report");
+    private JButton tpsReportButton = new JButton("TPS Report");
+    private JButton closeButton = new JButton("Close");
 
     public ReportMenuView() {
         this.setTitle("Store Manager");
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.setSize(500, 200);
+
+        JPanel panelButton = new JPanel();
+        panelButton.add(businessReportButton);
+        panelButton.add(employeeReportButton);
+        panelButton.add(tpsReportButton);
+        panelButton.add(closeButton);
+        this.getContentPane().add(panelButton);
 
     }
 

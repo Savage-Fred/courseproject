@@ -29,7 +29,7 @@ public class UserSettingsController implements ActionListener  {
     }
 
     public void loadChangePassword() {
-        Application.getInstance().getPhotoSettingsView().setVisible(true);
+        Application.getInstance().getPasswordSettingsView().setVisible(true);
 
     }
 

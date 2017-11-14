@@ -10,14 +10,18 @@ public class CardPaymentController implements ActionListener {
         this.cardPaymentView = view;
         this.dataAdapter = data;
 
+        cardPaymentView.getCloseButton().addActionListener(this);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() == cardPaymentView.getCloseButton()) {
+            loadClose();
+        }
     }
 
     public void loadClose() {
-
+        Application.getInstance().getLoginScreenView().setVisible(true);
     }
 }

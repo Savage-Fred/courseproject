@@ -27,9 +27,9 @@ public class LoginScreenController implements ActionListener {
      *  TODO:Message prompts for invalid username and password
      */
     public void login() {
-        if ("C" == loginScreenView.getUsernameField().getText()) {
+        if ("C".compareTo(loginScreenView.getUsernameField().getText()) == 0) {
             Application.getInstance().getCashierMenuView().setVisible(true);
-        } else if ("M" == loginScreenView.getUsernameField().getText()) {
+        } else if ("M".compareTo(loginScreenView.getUsernameField().getText()) == 0) {
             Application.getInstance().getManagerMenuView().setVisible(true);
         }
     }

@@ -66,11 +66,15 @@ public class Application {
 
     private AddNewUserController addNewUserController;
 
+    private AddItemInventoryController addItemInventoryController;
+
     private BusinessReportController businessReportController;
 
     private CardPaymentController cardPaymentController;
 
     private CashPaymentController cashPaymentController;
+
+    private CashierMenuController cashierMenuController;
 
     private CheckoutController checkoutController;
 
@@ -79,6 +83,8 @@ public class Application {
     private LoginScreenController loginScreenController;
 
     private ManageInventoryController manageInventoryController;
+
+    private ManagerMenuController managerMenuController;
 
     private PasswordSettingsController passwordSettingsController;
 
@@ -229,9 +235,21 @@ public class Application {
         return userSettingsMenuView;
     }
 
+    public CashierMenuController getCashierMenuController() {
+        return cashierMenuController;
+    }
+
     public DataAdapter getDataAdapter() {
 
         return dataAdapter;
+    }
+
+    public AddItemInventoryController getAddItemInventoryController() {
+        return addItemInventoryController;
+    }
+
+    public ManagerMenuController getManagerMenuController() {
+        return managerMenuController;
     }
 
     private void initializeDatabase(Statement stmt) throws SQLException {
@@ -271,7 +289,7 @@ public class Application {
         // Create data adapter here!
         dataAdapter = new DataAdapter(connection);
 
-        //productController = new ProductController(productView, dataAdapter);
+        addItemInventoryController = new AddItemInventoryController(addItemInventoryView, dataAdapter);
 
         checkoutController = new CheckoutController(checkoutView, dataAdapter);
 
@@ -291,6 +309,8 @@ public class Application {
 
         manageInventoryController = new ManageInventoryController(manageInventoryView, dataAdapter);
 
+        managerMenuController = new ManagerMenuController(managerMenuView, dataAdapter);
+
         passwordSettingsController = new PasswordSettingsController(passwordSettingsView, dataAdapter);
 
         paymentController = new PaymentController(paymentView, dataAdapter);
@@ -304,6 +324,8 @@ public class Application {
         systemSettingsController = new SystemSettingsController(systemSettingsView, dataAdapter);
 
         userSettingsController = new UserSettingsController(userSettingsMenuView, dataAdapter);
+
+        cashierMenuController = new CashierMenuController(cashierMenuView, dataAdapter);
     }
 
 

@@ -2,24 +2,39 @@ import javax.swing.*;
 
 public class AddItemInventoryView extends JFrame {
 
-    private JLabel addItemInventoryLabel;
-    private JLabel itemNameLabel;
-    private JLabel itemPriceLabel;
-    private JLabel itemQuantityLabel;
+    private JLabel addItemInventoryLabel = new JLabel("Add Item");
+    private JLabel itemNameLabel = new JLabel("Item Name");
+    private JLabel itemPriceLabel = new JLabel("Item Price");
+    private JLabel itemQuantityLabel = new JLabel("Item Quantity");
 
-    private JTextField itemNameField;
-    private JTextField itemQuantityField;
-    private JTextField itemPriceField;
+    private JTextField itemNameField = new JTextField(20);
+    private JTextField itemQuantityField = new JTextField(20);
+    private JTextField itemPriceField = new JTextField(20);
 
+    // TODO: Add method to insert Inventory to JTable
     private JTable currentInventory;
 
-    private JButton addItemButton;
-    private JButton closeButton;
+    private JButton addItemButton = new JButton("Add Item");
+    private JButton closeButton = new JButton("Close");
 
     public AddItemInventoryView() {
         this.setTitle("Store Manager");
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.setSize(500, 200);
+
+        JPanel panelUserFields = new JPanel();
+        panelUserFields.add(itemNameField);
+        panelUserFields.add(itemNameLabel);
+        panelUserFields.add(itemPriceField);
+        panelUserFields.add(itemPriceLabel);
+        panelUserFields.add(itemQuantityField);
+        panelUserFields.add(itemQuantityLabel);
+        this.getContentPane().add(panelUserFields);
+
+        JPanel panelButton = new JPanel();
+        panelButton.add(addItemButton);
+        panelButton.add(closeButton);
+        this.getContentPane().add(panelButton);
 
     }
 

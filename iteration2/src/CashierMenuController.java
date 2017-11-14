@@ -29,14 +29,17 @@ public class CashierMenuController implements ActionListener {
     }
 
     public void loadCheckout() {
+
         Application.getInstance().getCheckoutView().setVisible(true);
     }
 
     public void loadSettings() {
+
         Application.getInstance().getUserSettingsMenuView().setVisible(true);
     }
 
     public void loadClose() {
+
         Application.getInstance().getLoginScreenView().setVisible(true);
     }
 }

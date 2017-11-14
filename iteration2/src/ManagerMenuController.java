@@ -34,23 +34,23 @@ public class ManagerMenuController implements ActionListener {
     }
 
     public void loadManageInventory() {
-        Application.getInstance().getManageInventoryView();
+        Application.getInstance().getManageInventoryView().setVisible(true);
     }
 
     public void loadSystemSettings() {
-        Application.getInstance().getSystemSettingsView();
+        Application.getInstance().getSystemSettingsView().setVisible(true);
 
     }
 
     public void loadReports() {
-        Application.getInstance().getBusinessReportView();
+        Application.getInstance().getReportMenuView().setVisible(true);
     }
 
     public void loadSettings() {
-        Application.getInstance().getUserSettingsMenuView();
+        Application.getInstance().getUserSettingsMenuView().setVisible(true);
     }
 
     public void loadClose() {
-        Application.getInstance().getLoginScreenView();
+        Application.getInstance().getLoginScreenView().setVisible(true);
     }
 }
