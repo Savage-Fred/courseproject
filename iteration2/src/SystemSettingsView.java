@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class SystemSettingsView {
+public class SystemSettingsView extends JFrame {
     private JLabel systemSettingsLabel;
     private JLabel newUserLabel;
 

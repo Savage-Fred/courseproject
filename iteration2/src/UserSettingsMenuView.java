@@ -3,7 +3,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.image.*;
 
-public class UserSettingsMenuView {
+public class UserSettingsMenuView extends JFrame {
 
     private JLabel userSettingsLabel;
 

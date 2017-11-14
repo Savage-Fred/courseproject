@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class SearchInventoryView {
+public class SearchInventoryView extends JFrame {
     private JLabel searchItemLabel;
     private JLabel itemLabel;
 

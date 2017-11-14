@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.image.*;
 
 
-public class ManagerMenuView {
+public class ManagerMenuView extends JFrame {
 
     private JLabel storeLabel;
 

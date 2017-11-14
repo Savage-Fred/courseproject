@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class AddNewUserView {
+public class AddNewUserView extends JFrame {
 
     private JLabel addNewUserLabel;
     private JLabel usernameLabel;

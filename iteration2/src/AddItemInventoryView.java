@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class AddItemInventoryView {
+public class AddItemInventoryView extends JFrame {
     private JLabel addItemInventoryLabel;
     private JLabel itemNameLabel;
     private JLabel itemPriceLabel;

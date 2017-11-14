@@ -66,9 +66,10 @@ public class UserModel {
     public void setDisplayName(String nm) 	{ this.displayName = nm;}
 
     /**
+     *
      * @param 	path to image - String
      * @throws 	FileNotFoundException if image not found
-     */
+     *
     public void setProfilePicture(String imagePath) throws FileNotFoundException {
         BufferedImage img = null;
         try {
@@ -78,6 +79,6 @@ public class UserModel {
             System.out.println("File not found: " + e.getMessage());
         }
     }
-
+    */
 
 }

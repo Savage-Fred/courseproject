@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class CardPaymentView {
+public class CardPaymentView extends JFrame {
 
     private JLabel cardPaymentLabel;
     private JLabel payInstructionLabel;

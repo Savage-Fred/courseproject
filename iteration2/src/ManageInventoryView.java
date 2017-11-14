@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class ManageInventoryView {
+public class ManageInventoryView extends JFrame {
     private JLabel manageInventoryLabel;
 
     private JTable currentInventory;

@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class BusinessReportView {
+public class BusinessReportView extends JFrame {
     private JLabel businessReportLabel;
 
     private JTable currentInventory;

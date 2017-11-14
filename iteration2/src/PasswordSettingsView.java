@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class PasswordSettingsView {
+public class PasswordSettingsView extends JFrame {
 
     private JLabel changePasswordLabel;
 

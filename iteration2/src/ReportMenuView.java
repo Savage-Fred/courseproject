@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class ReportMenuView {
+public class ReportMenuView extends JFrame {
     private JLabel reportMenuLabel;
 
     private JButton businessReportButton;

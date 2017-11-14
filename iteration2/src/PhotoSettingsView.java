@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 
-public class PhotoSettingsView {
+public class PhotoSettingsView extends JFrame {
 
     private JLabel photoSettingsLabel;
 

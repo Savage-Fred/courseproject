@@ -3,7 +3,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.image.*;
 
-public class LoginScreenView {
+public class LoginScreenView extends JFrame {
 
     private JLabel storeLabel;
 

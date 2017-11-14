@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class CheckoutView {
+public class CheckoutView extends JFrame {
     private JLabel checkoutLabel;
 
     private JTable currentCart;

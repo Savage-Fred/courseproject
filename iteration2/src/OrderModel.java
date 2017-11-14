@@ -25,10 +25,10 @@ public class OrderModel {
     private double 	totalPrice;
     private double 	totalTax;
     private double 	subTotal;
-    private Date 	orderDate;
+    private java.sql.Date  orderDate;
     private String  customer;
     private ArrayList<ProductModel> products;
-    private List<OrderLine> lines;
+    private ArrayList<OrderLine> lines;
 
 
 
@@ -45,7 +45,7 @@ public class OrderModel {
      * @param orderDate
      * @param products
      */
-    public OrderModel(int orderID, double totalPrice, double totalTax, double subTotal, Date orderDate) {
+    public OrderModel(int orderID, double totalPrice, double totalTax, double subTotal, java.sql.Date orderDate) {
         this.orderID 	= orderID;
         this.totalPrice = totalPrice;
         this.totalTax 	= totalTax;
@@ -78,11 +78,18 @@ public class OrderModel {
     public double calculateTotal() {
         double total = 0;
         double tax = 0;
-
+        /*
         for(Iterator<ProductModel> i = this.products.iterator(); i.hasNext();) {
             total = total + i.getPrice();
             tax = tax + (i.getTaxRate() * i.getPrice());
         }
+        */
+
+        for (int i = 0; i < products.size(); i ++) {
+            total = total + products.get(i).getProductPrice();
+            tax = tax + (products.get(i).getProductTaxRate() * products.get(i).getProductPrice());
+        }
+
         this.subTotal = total;
         this.totalTax = tax;
         this.totalPrice = total + tax;
@@ -95,9 +102,16 @@ public class OrderModel {
      */
     public double calculateSubtotal() {
         double total = 0;
+        /*
         for(Iterator<ProductModel> i = this.products.iterator(); i.hasNext();) {
             total = total + i.getPrice();
         }
+        */
+
+        for (int i = 0; i < products.size(); i ++) {
+            total = total + products.get(i).getProductPrice();
+        }
+
         this.subTotal = total;
         return total;
     }
@@ -108,10 +122,16 @@ public class OrderModel {
      */
     public double calculateTotalTax() {
         double tax = 0;
-
+        /*
         for(Iterator<ProductModel> i = this.products.iterator(); i.hasNext();) {
             tax = tax + (i.getTaxRate() * i.getPrice());
         }
+        */
+
+        for (int i = 0; i < products.size(); i ++) {
+            tax = tax + (products.get(i).getProductTaxRate() * products.get(i).getProductPrice());
+        }
+
         this.totalTax = tax;
         return tax;
     }
@@ -144,7 +164,7 @@ public class OrderModel {
     ////////////////////////////////////
     ////// 	 Setters
     ////////////////////////////////////
-    public void setOrderDate	(Date d) 	{ this.orderDate 	= d;}
+    public void setOrderDate	(java.sql.Date d) 	{ this.orderDate 	= d;}
     public void setOrderID		(int oid) 	{ this.orderID 		= oid;}
     public void setTotalTax		(double t) 	{ this.totalTax 	= t;}
     public void setSubTotal		(double t) 	{ this.subTotal 	= t;}
@@ -156,12 +176,12 @@ public class OrderModel {
     ////// 	 Getters
     ////////////////////////////////////
     public int 		getOrderID()	{ return this.orderID;}
-    public Date 	getOrderDate() 	{ return this.orderDate;}
+    public java.sql.Date 	getOrderDate() 	{ return this.orderDate;}
     public double 	getTotalPrice() { return this.totalPrice;}
     public double 	getSubTotal() 	{ return this.subTotal;}
     public double 	getTotalTax() 	{ return this.totalTax;}
     public String 	getCustomer() 	{ return this.customer;}
     public List<OrderLine> getLines() { return lines;}
-    public static ArrayList<ProductModel> getProducts() { return this.products;}
+    public ArrayList<ProductModel> getProducts() { return this.products;}
 
 }
