@@ -266,7 +266,7 @@ public class Application {
 
         try {
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection( "jdbc:sqlite:store.db");
+            connection = DriverManager.getConnection( "jdbc:sqlite:grocery_store.db");
             Statement stmt = connection.createStatement();
             System.out.println("Connection to SQLite has been established.");
             if (!stmt.executeQuery("select * from product").next()) // product table do not exist

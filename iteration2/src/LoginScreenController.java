@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,6 +32,11 @@ public class LoginScreenController implements ActionListener {
             Application.getInstance().getCashierMenuView().setVisible(true);
         } else if ("M".compareTo(loginScreenView.getUsernameField().getText()) == 0) {
             Application.getInstance().getManagerMenuView().setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Please enter a valid Username"
+                    + "\nM -> Manager Mode"
+                    + "\nC -> Cashier Mode");
+
         }
     }
 
