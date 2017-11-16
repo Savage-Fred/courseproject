@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class ManageInventoryController implements ActionListener {
 
@@ -46,7 +48,25 @@ public class ManageInventoryController implements ActionListener {
     }
 
     public void loadClose() {
-        Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getManageInventoryView().setVisible(false);
+        //Application.getInstance().getLoginScreenView().setVisible(true);
+    }
+
+    public void loadTable() {
+        Vector<ProductModel> inventory = dataAdapter.loadInventory();
+
+        for (int i = 0; i < inventory.size(); i++) {
+            Object[] row = new Object[5];
+            row[0] = inventory.get(i).getProductID();
+            row[1] = inventory.get(i).getProductName();
+            row[2] = inventory.get(i).getProductPrice();
+            row[3] = inventory.get(i).getProductQuantity();
+
+            manageInventoryView.addRow(row);
+        }
+
+        manageInventoryView.validate();
+
     }
 }
 

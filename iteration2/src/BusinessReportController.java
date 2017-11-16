@@ -41,6 +41,7 @@ public class BusinessReportController implements ActionListener {
     }
 
     public void loadClose() {
-        Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getBusinessReportView().setVisible(false);
+        //Application.getInstance().getLoginScreenView().setVisible(true);
     }
 }

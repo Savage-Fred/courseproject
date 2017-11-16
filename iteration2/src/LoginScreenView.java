@@ -41,11 +41,11 @@ public class LoginScreenView extends JFrame {
     }
 
     public JTextField getUsernameField() {
-        return usernameField;
+        return this.usernameField;
     }
 
     public JTextField getPasswordField() {
-        return passwordField;
+        return this.passwordField;
     }
 
 

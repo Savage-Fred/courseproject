@@ -12,6 +12,7 @@ public class UserSettingsMenuView extends JFrame {
 
     private BufferedImage profilePicture;
 
+
     private JButton changePictureButton = new JButton("Change Picture");
     private JButton changePasswordButton = new JButton("Change Password");
     private JButton closeButton = new JButton("Close");
@@ -32,7 +33,9 @@ public class UserSettingsMenuView extends JFrame {
         panelButton.add(closeButton);
         this.getContentPane().add(panelButton);
 
+
     }
+
 
     public JButton getChangePictureButton() {
         return changePictureButton;
@@ -44,5 +47,13 @@ public class UserSettingsMenuView extends JFrame {
 
     public JButton getCloseButton() {
             return closeButton;
+    }
+
+    public void setUsernameField(String usernameField) {
+        this.usernameField.setText(usernameField);
+    }
+
+    public void setJobTitleField(String jobTitleField) {
+        this.jobTitleField.setText(jobTitleField);
     }
 }

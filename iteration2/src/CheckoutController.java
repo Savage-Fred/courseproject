@@ -54,7 +54,8 @@ public class CheckoutController implements ActionListener {
     }
 
     public void loadClose() {
-        Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getCheckoutView().setVisible(false);
+        //Application.getInstance().getLoginScreenView().setVisible(true);
     }
 
 

@@ -50,4 +50,12 @@ public class CashierMenuView extends JFrame {
     public JButton getCloseButton() {
         return closeButton;
     }
+
+    public void setJobTitleField(String jobTitleField) {
+        this.jobTitleField.setText(jobTitleField);
+    }
+
+    public void setUsernameField(String usernameField) {
+        this.usernameField.setText(usernameField);
+    }
 }

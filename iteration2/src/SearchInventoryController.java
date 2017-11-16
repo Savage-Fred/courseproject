@@ -28,6 +28,8 @@ public class SearchInventoryController implements ActionListener{
     }
 
     public void loadClose() {
-        Application.getInstance().getLoginScreenView().setVisible(true);
+
+        Application.getInstance().getSearchInventoryView().setVisible(false);
+        //Application.getInstance().getLoginScreenView().setVisible(true);
     }
 }

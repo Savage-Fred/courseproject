@@ -30,6 +30,7 @@ public class SystemSettingsController implements ActionListener {
 
 
     public void loadClose() {
-        Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getSystemSettingsView().setVisible(false);
+        //Application.getInstance().getLoginScreenView().setVisible(true);
     }
 }

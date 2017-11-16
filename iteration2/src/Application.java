@@ -23,7 +23,10 @@ public class Application {
 
     private DataAdapter dataAdapter;
 
+    private UserModel currentUser;
+
     // Product Views
+
 
     private AddItemInventoryView addItemInventoryView = new AddItemInventoryView();
 
@@ -252,11 +255,19 @@ public class Application {
         return managerMenuController;
     }
 
+    public UserModel getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(UserModel currentUser) {
+        this.currentUser = currentUser;
+    }
+
     private void initializeDatabase(Statement stmt) throws SQLException {
         // create the tables and insert sample data here!
 
-        stmt.execute("create table Product (ProductID int PRIMARY KEY, ProductName char(30), Price double, Quantity double)");
-        stmt.execute("create table Order (ProductID int PRIMARY KEY, ProductName char(30), Price double, Quantity double)");
+        //stmt.execute("create table product (product_id int PRIMARY KEY, ProductName char(30), Price double, Quantity double)");
+        //stmt.execute("create table orders (ProductID int PRIMARY KEY, ProductName char(30), Price double, Quantity double)");
 
 
     }
@@ -269,7 +280,7 @@ public class Application {
             connection = DriverManager.getConnection( "jdbc:sqlite:grocery_store.db");
             Statement stmt = connection.createStatement();
             System.out.println("Connection to SQLite has been established.");
-            if (!stmt.executeQuery("select * from product").next()) // product table do not exist
+            if (!stmt.executeQuery("select * from products").next()) // product table do not exist
                 initializeDatabase(stmt);
 
 

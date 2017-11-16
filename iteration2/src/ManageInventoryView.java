@@ -1,10 +1,13 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
 public class ManageInventoryView extends JFrame {
     private JLabel manageInventoryLabel = new JLabel("Manage Inventory");
 
-    // TODO: Add method to add current inventory to JTable
-    private JTable currentInventory;
+    private DefaultTableModel items = new DefaultTableModel();
+
+    private JTable currentInventory = new JTable(items);
 
     private JButton addItemButton = new JButton("Add Item");
     private JButton editItemButton = new JButton("Edit Item");
@@ -15,6 +18,20 @@ public class ManageInventoryView extends JFrame {
         this.setTitle("Store Manager");
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.setSize(500, 200);
+
+        items.addColumn("Product ID");
+        items.addColumn("Name");
+        items.addColumn("Price");
+        items.addColumn("Quantity");
+
+        JPanel panelOrder = new JPanel();
+        panelOrder.setPreferredSize(new Dimension(400, 450));
+        panelOrder.setLayout(new BoxLayout(panelOrder, BoxLayout.PAGE_AXIS));
+        currentInventory.setBounds(0, 0, 400, 350);
+        panelOrder.add(currentInventory.getTableHeader());
+        panelOrder.add(currentInventory);
+        currentInventory.setFillsViewportHeight(true);
+        this.getContentPane().add(panelOrder);
 
         JPanel panelButton = new JPanel();
         panelButton.add(addItemButton);
@@ -39,5 +56,10 @@ public class ManageInventoryView extends JFrame {
 
     public JButton getCloseButton() {
         return closeButton;
+    }
+
+    public void addRow(Object[] row) {
+        items.addRow(row);              // add a row to list of item!
+        items.fireTableDataChanged();
     }
 }

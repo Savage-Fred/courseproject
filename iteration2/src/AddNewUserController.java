@@ -32,6 +32,7 @@ public class AddNewUserController implements ActionListener {
     }
 
     public void loadClose() {
-        Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getAddNewUserView().setVisible(false);
+        //Application.getInstance().getLoginScreenView().setVisible(true);
     }
 }

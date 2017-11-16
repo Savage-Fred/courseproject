@@ -29,6 +29,7 @@ public class PhotoSettingsController implements ActionListener {
     }
 
     public void loadClose() {
-        Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getPhotoSettingsView().setVisible(false);
+        //Application.getInstance().getLoginScreenView().setVisible(true);
     }
 }

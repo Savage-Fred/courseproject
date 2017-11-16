@@ -24,6 +24,7 @@ public class ManagerMenuView extends JFrame {
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.setSize(500, 200);
 
+
         JPanel panelUserInfo = new JPanel();
         panelUserInfo.add(new JLabel("Username: "));
         panelUserInfo.add(usernameField);
@@ -59,5 +60,13 @@ public class ManagerMenuView extends JFrame {
 
     public JButton getCloseButton() {
         return closeButton;
+    }
+
+    public void setJobTitleField(String jobTitleField) {
+        this.jobTitleField.setText(jobTitleField);
+    }
+
+    public void setUsernameField(String usernameField) {
+        this.usernameField.setText(usernameField);
     }
 }

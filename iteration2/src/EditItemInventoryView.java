@@ -5,10 +5,12 @@ public class EditItemInventoryView extends JFrame{
     private JLabel itemNameLabel = new JLabel("Item Name");
     private JLabel itemPriceLabel = new JLabel("Item Price");
     private JLabel itemQuantityLabel = new JLabel("Item Quantity");
+    private JLabel itemIDLabel = new JLabel("Item ID");
 
     private JTextField itemNameField = new JTextField(20);
     private JTextField itemQuantityField = new JTextField(20);
     private JTextField itemPriceField = new JTextField(20);
+    private JTextField itemIDField = new JTextField(20);
 
     // TODO: Add Method to inset selected product into JTable
     private JTable currentInventory;
@@ -22,6 +24,8 @@ public class EditItemInventoryView extends JFrame{
         this.setSize(500, 200);
 
         JPanel panelUserFields = new JPanel();
+        panelUserFields.add(itemIDField);
+        panelUserFields.add(itemIDLabel);
         panelUserFields.add(itemNameField);
         panelUserFields.add(itemNameLabel);
         panelUserFields.add(itemPriceField);
@@ -47,6 +51,10 @@ public class EditItemInventoryView extends JFrame{
 
     public JTextField getItemQuantityField() {
         return itemQuantityField;
+    }
+
+    public JTextField getItemIDField() {
+        return itemIDField;
     }
 
     public JButton getEditItemButton() {

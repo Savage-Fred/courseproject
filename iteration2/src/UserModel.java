@@ -26,23 +26,28 @@ public class UserModel {
     private int userID;
     private Date startDate; //java.util.*
     private String password;
-    private boolean isManager;
-    private BufferedImage profilePicture;
+    private int isManager; // 1 -> Manager, 0 -> Cashier
+    //private BufferedImage profilePicture;
+    private String profilePicture;
+    private int isSignedIn;
 
 
     ////////////////////////////////////
     //////	 Methods
     ////////////////////////////////////
 
-    public UserModel() {}
+    public UserModel() {
+        name = "";
+    }
 
-    public UserModel(String nameIn, String displayNameIn, int userIDIn, Date startDateIn, String passwordIn, boolean isManagerIn) {
+    public UserModel(String nameIn, String displayNameIn, int userIDIn, Date startDateIn, String passwordIn, int isManagerIn, int isSignedIn) {
         this.name = nameIn;
         this.displayName = displayNameIn;
         this.userID = userIDIn;
         this.startDate = startDateIn;
         this.password = passwordIn;
         this.isManager = isManagerIn;
+        this.isSignedIn = isSignedIn;
     }
     ////////////////////////////////////
     ////// 	Getters
@@ -50,21 +55,40 @@ public class UserModel {
     public String 	getName()		 { return this.name;}
     public int 		getUserID()		 { return this.userID;}
     public Date 	getStartDate()	 { return this.startDate;}
-    public boolean 	getIsManager()	 { return this.isManager;}
+    public int 	getIsManager()	 { return this.isManager;}
     public String 	getPassword() 	 { return this.password;}
     public String 	getDisplayName() { return this.displayName;}
-    public BufferedImage getProfilePicture() { return this.profilePicture;}
+    //public BufferedImage getProfilePicture() { return this.profilePicture;}
+    public String getProfilePicture() { return this.profilePicture;}
+
+    public int getIsSignedIn() {
+        return isSignedIn;
+    }
 
     ////////////////////////////////////
     ////// 	Setters
     ///////////////////////////////////
     public void setUserID(int uid) 			{ this.userID = uid;}
     public void setName(String uname) 		{ this.name = uname;}
-    public void setIsManager(boolean x) 	{ this.isManager = x;}
+    public void setIsManager(int x) 	{ this.isManager = x;}
     public void setStartDate(Date dateIn) 	{ this.startDate = dateIn;}
     public void setPassword(String pw)		{ this.password = pw;}
     public void setDisplayName(String nm) 	{ this.displayName = nm;}
 
+    public void setIsSignedIn(int isSignedIn) {
+        this.isSignedIn = isSignedIn;
+    }
+
+
+    public String getJobTitle() {
+        String jobTitle;
+        if (this.isManager == 0) {
+            jobTitle = "Cashier";
+        } else {
+            jobTitle = "Manager";
+        }
+        return jobTitle;
+    }
     /**
      *
      * @param 	path to image - String

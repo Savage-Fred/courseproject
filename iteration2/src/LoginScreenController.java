@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class LoginScreenController implements ActionListener {
 
@@ -28,16 +29,67 @@ public class LoginScreenController implements ActionListener {
      *  TODO:Message prompts for invalid username and password
      */
     public void login() {
-        if ("C".compareTo(loginScreenView.getUsernameField().getText()) == 0) {
-            Application.getInstance().getCashierMenuView().setVisible(true);
-        } else if ("M".compareTo(loginScreenView.getUsernameField().getText()) == 0) {
+        String usernameIn = loginScreenView.getUsernameField().getText().trim();
+        String passwordIn = loginScreenView.getPasswordField().getText().trim();
+
+        if (usernameIn.length() == 0) {
+            JOptionPane.showMessageDialog(null, "Invalid Username! Please provide a non-empty Username!");
+            return;
+        }
+
+        if (passwordIn.length() == 0) {
+            JOptionPane.showMessageDialog(null, "Invalid Password! Please provide a non-empty Password!");
+            return;
+        }
+
+
+        UserModel user = dataAdapter.loadUser(usernameIn, passwordIn);
+
+        if (user == null) {
+            JOptionPane.showMessageDialog(null, "This User does not exist in the database!");
+            return;
+        }
+
+        if (user.getPassword().compareTo(passwordIn) != 0) {
+            JOptionPane.showMessageDialog(null, "The password entered is Invalid!");
+            return;
+        }
+
+        System.out.println( "User ID: " + user.getUserID()
+                + "\nName: " + user.getName()
+                + "\nIs Manager: " + user.getIsManager()
+                + "\nFullname: " + user.getDisplayName()
+                + "\nPassword: " + user.getPassword());
+
+
+        if (user.getIsManager() == 1) {
+
+            //Application.getInstance().getCashierMenuView().setVisible(true);
             Application.getInstance().getManagerMenuView().setVisible(true);
+
+            dataAdapter.loginUser(user);
+
+            Application.getInstance().getManagerMenuController().updateUserFields();
+
+
+            loginScreenView.getUsernameField().setText("");
+            loginScreenView.getPasswordField().setText("");
+
+
+
         } else {
-            JOptionPane.showMessageDialog(null, "Please enter a valid Username"
-                    + "\nM -> Manager Mode"
-                    + "\nC -> Cashier Mode");
+            Application.getInstance().getCashierMenuView().setVisible(true);
+            //Application.getInstance().getManagerMenuView().setVisible(true);
+
+            dataAdapter.loginUser(user);
+
+            Application.getInstance().getManagerMenuController().updateUserFields();
+
+            loginScreenView.getUsernameField().setText("");
+            loginScreenView.getPasswordField().setText("");
 
         }
+
     }
 
 }

@@ -75,7 +75,7 @@ public class AddItemInventoryController implements ActionListener {
     }
 
     public void loadClose() {
-        Application.getInstance().getLoginScreenView().setVisible(true);
+        //Application.getInstance().getLoginScreenView().setVisible(true);
         Application.getInstance().getAddItemInventoryView().setVisible(false);
 
     }
