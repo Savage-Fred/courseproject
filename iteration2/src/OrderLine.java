@@ -1,4 +1,3 @@
-package grocerystore;
 
 public class OrderLine {
 
@@ -6,6 +5,8 @@ public class OrderLine {
     private int orderID;
     private double quantity;
     private double cost;
+
+    public OrderLine(){ }
 
     public double getQuantity() {
         return quantity;
