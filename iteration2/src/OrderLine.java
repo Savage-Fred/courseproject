@@ -6,6 +6,8 @@ public class OrderLine {
     private double quantity;
     private double cost;
 
+    public OrderLine(){ }
+
     public double getQuantity() {
         return quantity;
     }

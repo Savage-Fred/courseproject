@@ -54,26 +54,32 @@ public class ManagerMenuController implements ActionListener {
 
         Application.getInstance().getManageInventoryController().loadTable();
         Application.getInstance().getManageInventoryView().setVisible(true);
+        Application.getInstance().getManagerMenuView().setVisible(false);
     }
 
     public void loadSystemSettings() {
         Application.getInstance().getSystemSettingsView().setVisible(true);
+        Application.getInstance().getManagerMenuView().setVisible(false);
 
     }
 
     public void loadReports() {
         Application.getInstance().getReportMenuView().setVisible(true);
+        Application.getInstance().getManagerMenuView().setVisible(false);
+
     }
 
     public void loadSettings() {
         Application.getInstance().getUserSettingsController().updateUserFields();
 
         Application.getInstance().getUserSettingsMenuView().setVisible(true);
+        Application.getInstance().getManagerMenuView().setVisible(false);
+
     }
 
     public void loadClose() {
         Application.getInstance().getManagerMenuView().setVisible(false);
         dataAdapter.logoutUser();
-        //Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getLoginScreenView().setVisible(true);
     }
 }

@@ -83,6 +83,14 @@ public class UserModel {
         this.isSignedIn = isSignedIn;
     }
 
+    public void setUserType(String userType) {
+        if (userType.toLowerCase().trim().compareTo("manager") == 0) {
+            this.isManager = 1; // 1 -> Manager (or isManager = true)
+        } else { // otherwise, 0 -> Cashier
+            this.isManager = 0;
+        }
+    }
+
 
     public String getJobTitle() {
         String jobTitle;

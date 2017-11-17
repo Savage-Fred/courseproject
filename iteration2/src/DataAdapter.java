@@ -10,6 +10,13 @@ public class DataAdapter {
         this.connection = connection;
     }
 
+    /*
+    *  @param integer product_id
+    *  @returns returns ProductModel
+    *
+    *  Connects to products table
+    *
+    */
     public ProductModel loadProduct(int id) {
         try {
             String query = "SELECT * FROM products WHERE product_id = " + id;
@@ -35,34 +42,30 @@ public class DataAdapter {
         return null;
     }
 
-    public List<ProductModel> loadInventory() {
-        List<ProductModel> inventory = new ArrayList<ProductModel>();
+    /*
+     *  @param integer pio_id
+     *  @returns returns Orderline
+     *
+     *  Connects to products_id_order table
+     *  Used in the Business Report Controller
+     */
+
+    public OrderLine loadProductforReport(int id) {
         try {
-            String query = "SELECT * FROM products";
+            String query = "SELECT * FROM products_in_order WHERE product_id = " + id;
 
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
-
-
-            while (resultSet.next()) {
-                ProductModel product = new ProductModel();
-                product.setProductID(resultSet.getInt(1));
-                product.setProductName(resultSet.getString(2));
-                product.setProductPrice(resultSet.getDouble(6));
-                product.setProductQuantity(resultSet.getDouble(5));
+            if (resultSet.next()) {
+                OrderLine orderLine = new OrderLine();
+                orderLine.setOrderID(resultSet.getInt(2)); //order_id
+                orderLine.setProductID(resultSet.getInt(3)); //product_id
+                orderLine.setQuantity(resultSet.getInt(4)); // quantity
                 resultSet.close();
                 statement.close();
 
-                inventory.add(product);
-
+                return orderLine;
             }
-
-            for (int i = 0; i < inventory.size(); i++) {
-                System.out.println(inventory.get(i));
-            }
-
-            return inventory;
-
 
         } catch (SQLException e) {
             System.out.println("Database access error!");
@@ -70,6 +73,40 @@ public class DataAdapter {
         }
         return null;
     }
+
+    /*
+     *  @param integer pio_id
+     *  @returns returns Orderline
+     *
+     *  Connects to products_id_order table
+     *  Used in the Business Report Controller
+     */
+
+    public OrderLine loadProductforReport(int productIdIn, int pioIdIn) {
+        try {
+            String query = "SELECT * FROM products_in_order WHERE pio_id = " + pioIdIn + " AND product_id = " + productIdIn + "";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            if (resultSet.next()) {
+                OrderLine orderLine = new OrderLine();
+                orderLine.setOrderID(resultSet.getInt(2)); //order_id
+                orderLine.setProductID(resultSet.getInt(3)); //product_id
+                orderLine.setQuantity(resultSet.getInt(4)); // quantity
+                resultSet.close();
+                statement.close();
+
+                return orderLine;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Database access error!");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
 
 
 

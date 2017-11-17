@@ -28,6 +28,7 @@ public class CashierMenuController implements ActionListener {
     }
 
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
         updateUserFields();
@@ -45,18 +46,23 @@ public class CashierMenuController implements ActionListener {
     public void loadCheckout() {
 
         Application.getInstance().getCheckoutView().setVisible(true);
+        Application.getInstance().getCashierMenuView().setVisible(false);
+
     }
 
     public void loadSettings() {
 
         Application.getInstance().getUserSettingsController().updateUserFields();
         Application.getInstance().getUserSettingsMenuView().setVisible(true);
+        Application.getInstance().getCashierMenuView().setVisible(false);
+
     }
 
     public void loadClose() {
 
+        Application.getInstance().getLoginScreenView().setVisible(true);
         Application.getInstance().getCashierMenuView().setVisible(false);
-        //Application.getInstance().getLoginScreenView().setVisible(true);
+        
         dataAdapter.logoutUser();
     }
 }

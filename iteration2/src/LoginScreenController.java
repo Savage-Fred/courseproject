@@ -64,8 +64,9 @@ public class LoginScreenController implements ActionListener {
 
         if (user.getIsManager() == 1) {
 
-            //Application.getInstance().getCashierMenuView().setVisible(true);
+
             Application.getInstance().getManagerMenuView().setVisible(true);
+            Application.getInstance().getLoginScreenView().setVisible(false);
 
             dataAdapter.loginUser(user);
 
@@ -79,11 +80,12 @@ public class LoginScreenController implements ActionListener {
 
         } else {
             Application.getInstance().getCashierMenuView().setVisible(true);
-            //Application.getInstance().getManagerMenuView().setVisible(true);
+            Application.getInstance().getLoginScreenView().setVisible(false);
+
 
             dataAdapter.loginUser(user);
 
-            Application.getInstance().getManagerMenuController().updateUserFields();
+            Application.getInstance().getCashierMenuController().updateUserFields();
 
             loginScreenView.getUsernameField().setText("");
             loginScreenView.getPasswordField().setText("");

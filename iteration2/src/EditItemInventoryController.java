@@ -84,7 +84,9 @@ public class EditItemInventoryController implements ActionListener {
 
         // Store the product to the database
 
-        dataAdapter.saveProduct(product);
+        if (dataAdapter.saveProduct(product)) {
+            JOptionPane.showMessageDialog(null, "The product has been updated!");
+        }
         Application.getInstance().getManageInventoryView().setVisible(true);
     }
 

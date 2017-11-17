@@ -31,7 +31,10 @@ public class ReportMenuController implements ActionListener {
     }
 
     public void loadBusinessReport() {
+
+        Application.getInstance().getBusinessReportController().loadOrders();
         Application.getInstance().getBusinessReportView().setVisible(true);
+        Application.getInstance().getReportMenuView().setVisible(false);
     }
 
     public void loadEmployeeReport() {

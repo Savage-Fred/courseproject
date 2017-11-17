@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,10 +26,43 @@ public class AddNewUserController implements ActionListener {
     }
 
     public void addNewUser() {
-        // TODO: Add method to check user inputs
-        // TODO: ADD method to check is user exist in Database
-        // TODO: Add method to add user to user table
+        String newUserName = addNewUserView.getUsernameField().getText().trim();
+
+        if (newUserName.length() == 0) {
+            JOptionPane.showMessageDialog(null, "Invalid Username! Please provide a non-empty username!");
+            return;
+        }
+
+        String newPassword = addNewUserView.getPasswordField().getText().trim();
+
+        if (newPassword.length() == 0) {
+            JOptionPane.showMessageDialog(null, "Invalid Password! Please provide a non-empty password!");
+            return;
+        }
+
+        String newUserType = addNewUserView.getUserTypeField().getText().trim();
+
+        if (newUserType.length() == 0) {
+            JOptionPane.showMessageDialog(null, "Invalid User Type! Please provide a non-empty user type!");
+            return;
+        }
+
+        if (newUserType.toLowerCase().compareTo("cashier") != 0 || newUserType.toLowerCase().compareTo("manager") != 0) {
+            JOptionPane.showMessageDialog(null, "Invalid User type! Please enter Manager or Cashier!");
+            return;
+        }
+
+        UserModel user = new UserModel();
+        user.setName(newUserName);
+        user.setPassword(newPassword);
+        user.setUserType(newUserType);
+
+        if(dataAdapter.saveUser(user)) {
+            JOptionPane.showMessageDialog(null, "New user saved to the System!");
+        }
+
         Application.getInstance().getSystemSettingsView().setVisible(true);
+        Application.getInstance().getAddNewUserView().setVisible(false);
     }
 
     public void loadClose() {

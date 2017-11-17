@@ -5,7 +5,9 @@ import java.awt.image.*;
 
 public class CashierMenuView extends JFrame {
 
-    private JLabel storeLabel = new JLabel("Bob's Groceries");
+    private JLabel storeLabel = new JLabel("Cashier Menu");
+    private JLabel usernameLabel = new JLabel("Username");
+    private JLabel jobTitleLabel = new JLabel("Job Title");
 
     private JTextField usernameField = new JTextField(10);
     private JTextField jobTitleField = new JTextField( 10);
@@ -23,11 +25,15 @@ public class CashierMenuView extends JFrame {
 
         // TODO: Create JPanel for profile picture
 
+        this.getContentPane().add(storeLabel);
+
         JPanel panelUsername = new JPanel();
+        panelUsername.add(usernameLabel);
         panelUsername.add(usernameField);
         this.getContentPane().add(panelUsername);
 
         JPanel panelJobTitle = new JPanel();
+        panelJobTitle.add(jobTitleLabel);
         panelJobTitle.add(jobTitleField);
         this.getContentPane().add(panelJobTitle);
 

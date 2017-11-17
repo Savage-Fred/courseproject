@@ -24,6 +24,7 @@ public class ManagerMenuView extends JFrame {
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.setSize(500, 200);
 
+        this.getContentPane().add(storeLabel);
 
         JPanel panelUserInfo = new JPanel();
         panelUserInfo.add(new JLabel("Username: "));
