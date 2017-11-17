@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
 public class AddItemInventoryView extends JFrame {
 
@@ -13,8 +15,9 @@ public class AddItemInventoryView extends JFrame {
     private JTextField itemPriceField = new JTextField(20);
     private JTextField itemIDField = new JTextField(20);
 
-    // TODO: Add method to insert Inventory to JTable
-    private JTable currentInventory;
+    private DefaultTableModel items = new DefaultTableModel();
+
+    private JTable currentInventory = new JTable(items);
 
     private JButton addItemButton = new JButton("Add Item");
     private JButton closeButton = new JButton("Close");
@@ -22,17 +25,44 @@ public class AddItemInventoryView extends JFrame {
     public AddItemInventoryView() {
         this.setTitle("Store Manager");
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
-        this.setSize(500, 200);
+        this.setSize(600, 500);
+
+        items.addColumn("Product ID");
+        items.addColumn("Name");
+        items.addColumn("Price");
+        items.addColumn("Quantity");
+
+        JPanel panelOrder = new JPanel();
+        panelOrder.setPreferredSize(new Dimension(400, 450));
+        panelOrder.setLayout(new BoxLayout(panelOrder, BoxLayout.PAGE_AXIS));
+        currentInventory.setBounds(0, 0, 400, 350);
+        panelOrder.add(currentInventory.getTableHeader());
+        panelOrder.add(currentInventory);
+        currentInventory.setFillsViewportHeight(true);
+        this.getContentPane().add(panelOrder);
+
+        JPanel panelItemID = new JPanel();
+        panelItemID.add(itemIDLabel);
+        panelItemID.add(itemIDField);
+
+        JPanel panelItemName = new JPanel();
+        panelItemName.add(itemNameLabel);
+        panelItemName.add(itemNameField);
+
+        JPanel panelItemPrice = new JPanel();
+        panelItemPrice.add(itemPriceLabel);
+        panelItemPrice.add(itemPriceField);
+
+        JPanel panelItemQuantity = new JPanel();
+        panelItemQuantity.add(itemQuantityLabel);
+        panelItemQuantity.add(itemQuantityField);
 
         JPanel panelUserFields = new JPanel();
-        panelUserFields.add(itemIDField);
-        panelUserFields.add(itemIDLabel);
-        panelUserFields.add(itemNameField);
-        panelUserFields.add(itemNameLabel);
-        panelUserFields.add(itemPriceField);
-        panelUserFields.add(itemPriceLabel);
-        panelUserFields.add(itemQuantityField);
-        panelUserFields.add(itemQuantityLabel);
+        panelUserFields.setLayout(new BoxLayout(panelUserFields, BoxLayout.Y_AXIS));
+        panelUserFields.add(panelItemID);
+        panelUserFields.add(panelItemName);
+        panelUserFields.add(panelItemPrice);
+        panelUserFields.add(panelItemQuantity);
         this.getContentPane().add(panelUserFields);
 
         JPanel panelButton = new JPanel();
@@ -58,11 +88,32 @@ public class AddItemInventoryView extends JFrame {
         return itemIDField;
     }
 
+    public void setItemIDField(JTextField itemIDField) {
+        this.itemIDField = itemIDField;
+    }
+
+    public void setItemNameField(JTextField itemNameField) {
+        this.itemNameField = itemNameField;
+    }
+
+    public void setItemPriceField(JTextField itemPriceField) {
+        this.itemPriceField = itemPriceField;
+    }
+
+    public void setItemQuantityField(JTextField itemQuantityField) {
+        this.itemQuantityField = itemQuantityField;
+    }
+
     public JButton getAddItemButton() {
         return addItemButton;
     }
 
     public JButton getCloseButton() {
         return closeButton;
+    }
+
+    public void addRow(Object[] row) {
+        items.addRow(row);              // add a row to list of item!
+        items.fireTableDataChanged();
     }
 }

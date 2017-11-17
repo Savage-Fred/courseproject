@@ -35,6 +35,11 @@ public class AddItemInventoryController implements ActionListener {
             return;
         }
 
+        if (dataAdapter.loadProduct(productID) != null) {
+            JOptionPane.showMessageDialog(null, "Product ID is already in use! Please provide a product ID that has not been used!");
+            return;
+        }
+
         double productPrice;
         try {
             productPrice = Double.parseDouble(addItemInventoryView.getItemPriceField().getText());
@@ -70,8 +75,38 @@ public class AddItemInventoryController implements ActionListener {
 
         // Store the product to the database
 
-        dataAdapter.saveProduct(product);
+        if (dataAdapter.saveProduct(product)) {
+            JOptionPane.showMessageDialog(null, "The product has been added to your Inventory!");
+
+        }
+
+        loadTable();
+
+        addItemInventoryView.setItemIDField(new JTextField(""));
+        addItemInventoryView.setItemNameField(new JTextField(""));
+        addItemInventoryView.setItemPriceField(new JTextField(""));
+        addItemInventoryView.setItemQuantityField(new JTextField(""));
+
+        addItemInventoryView.validate();
         //Application.getInstance().getManageInventoryView().setVisible(true);
+    }
+
+    public void loadTable() {
+        ProductModel product = new ProductModel();
+
+        for (int i = 1; dataAdapter.loadProduct(i) != null; i++) {
+            product = dataAdapter.loadProduct(i);
+            Object[] row = new Object[5];
+            row[0] = product.getProductID();
+            row[1] = product.getProductName();
+            row[2] = product.getProductPrice();
+            row[3] = product.getProductQuantity();
+
+            addItemInventoryView.addRow(row);
+        }
+
+        addItemInventoryView.validate();
+
     }
 
     public void loadClose() {

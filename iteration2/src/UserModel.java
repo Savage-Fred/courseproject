@@ -75,6 +75,10 @@ public class UserModel {
     public void setPassword(String pw)		{ this.password = pw;}
     public void setDisplayName(String nm) 	{ this.displayName = nm;}
 
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
     public void setIsSignedIn(int isSignedIn) {
         this.isSignedIn = isSignedIn;
     }

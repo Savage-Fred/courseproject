@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class DataAdapter {
@@ -19,8 +20,8 @@ public class DataAdapter {
                 ProductModel product = new ProductModel();
                 product.setProductID(resultSet.getInt(1));
                 product.setProductName(resultSet.getString(2));
-                product.setProductPrice(resultSet.getDouble(3));
-                product.setProductQuantity(resultSet.getDouble(4));
+                product.setProductPrice(resultSet.getDouble(6));
+                product.setProductQuantity(resultSet.getDouble(5));
                 resultSet.close();
                 statement.close();
 
@@ -34,13 +35,15 @@ public class DataAdapter {
         return null;
     }
 
-    public Vector<ProductModel> loadInventory() {
-        Vector<ProductModel> inventory = new Vector<ProductModel>();
+    public List<ProductModel> loadInventory() {
+        List<ProductModel> inventory = new ArrayList<ProductModel>();
         try {
             String query = "SELECT * FROM products";
 
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
+
+
             while (resultSet.next()) {
                 ProductModel product = new ProductModel();
                 product.setProductID(resultSet.getInt(1));
@@ -53,7 +56,10 @@ public class DataAdapter {
                 inventory.add(product);
 
             }
-            System.out.println(inventory);
+
+            for (int i = 0; i < inventory.size(); i++) {
+                System.out.println(inventory.get(i));
+            }
 
             return inventory;
 

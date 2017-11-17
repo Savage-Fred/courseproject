@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 public class PhotoSettingsView extends JFrame {
 
     private JLabel photoSettingsLabel = new JLabel("Photo Settings");
+    private JLabel newPhotoURLLabel = new JLabel("Please enter the url for the new photo");
 
     private BufferedImage profilePicture;
 
@@ -17,8 +18,11 @@ public class PhotoSettingsView extends JFrame {
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.setSize(500, 200);
 
+        this.getContentPane().add(photoSettingsLabel);
+
         JPanel panelUserInput = new JPanel();
         panelUserInput.add(newImageURLField);
+        panelUserInput.add(newPhotoURLLabel);
         newImageURLField.setHorizontalAlignment(JTextField.RIGHT);
         this.getContentPane().add(panelUserInput);
 

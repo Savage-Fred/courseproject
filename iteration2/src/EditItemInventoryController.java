@@ -35,6 +35,11 @@ public class EditItemInventoryController implements ActionListener {
             return;
         }
 
+        if (dataAdapter.loadProduct(productID) != null) {
+            JOptionPane.showMessageDialog(null, "Product ID Taken! Please provide a valid product ID!");
+            return;
+        }
+
         double productPrice;
         try {
             productPrice = Double.parseDouble(editItemInventoryView.getItemPriceField().getText());
@@ -44,12 +49,21 @@ public class EditItemInventoryController implements ActionListener {
             return;
         }
 
+        if (productPrice < 0) {
+            JOptionPane.showMessageDialog(null, "Invalid product price! Please provide a product price greater than 0!");
+            return;
+        }
+
         double productQuantity;
         try {
             productQuantity = Double.parseDouble(editItemInventoryView.getItemQuantityField().getText());
         }
         catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Invalid product quantity! Please provide a valid product quantity!");
+            return;
+        }
+        if (productQuantity < 0) {
+            JOptionPane.showMessageDialog(null, "Invalid product Quantity! Please provide a product quantity greater than 0!");
             return;
         }
 
@@ -72,6 +86,20 @@ public class EditItemInventoryController implements ActionListener {
 
         dataAdapter.saveProduct(product);
         Application.getInstance().getManageInventoryView().setVisible(true);
+    }
+
+    public void loadTable(int productId) {
+        ProductModel product = new ProductModel();
+        product = dataAdapter.loadProduct(productId);
+        Object[] row = new Object[5];
+        row[0] = product.getProductID();
+        row[1] = product.getProductName();
+        row[2] = product.getProductPrice();
+        row[3] = product.getProductQuantity();
+
+        editItemInventoryView.addRow(row);
+        editItemInventoryView.validate();
+
     }
 
     public void loadClose() {

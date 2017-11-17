@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class ManageInventoryController implements ActionListener {
@@ -34,11 +35,18 @@ public class ManageInventoryController implements ActionListener {
     }
 
     public void loadAddItem() {
+
+        Application.getInstance().getAddItemInventoryController().loadTable();
         Application.getInstance().getAddItemInventoryView().setVisible(true);
+        Application.getInstance().getManageInventoryView().setVisible(false);
     }
 
     public void loadEditItem() {
-        Application.getInstance().getEditItemInventoryView().setVisible(true);
+
+        Application.getInstance().getSearchInventoryController().loadTable();
+        Application.getInstance().getSearchInventoryView().setVisible(true);
+        Application.getInstance().getManageInventoryView().setVisible(false);
+
     }
 
     public void loadDeleteItem() {
@@ -53,14 +61,15 @@ public class ManageInventoryController implements ActionListener {
     }
 
     public void loadTable() {
-        Vector<ProductModel> inventory = dataAdapter.loadInventory();
+        ProductModel product = new ProductModel();
 
-        for (int i = 0; i < inventory.size(); i++) {
+        for (int i = 1; dataAdapter.loadProduct(i) != null; i++) {
+            product = dataAdapter.loadProduct(i);
             Object[] row = new Object[5];
-            row[0] = inventory.get(i).getProductID();
-            row[1] = inventory.get(i).getProductName();
-            row[2] = inventory.get(i).getProductPrice();
-            row[3] = inventory.get(i).getProductQuantity();
+            row[0] = product.getProductID();
+            row[1] = product.getProductName();
+            row[2] = product.getProductPrice();
+            row[3] = product.getProductQuantity();
 
             manageInventoryView.addRow(row);
         }
