@@ -70,16 +70,17 @@ public class PasswordSettingsController implements ActionListener {
         if( dataAdapter.saveUser(user)) {
 
             JOptionPane.showMessageDialog(null, "Your password has been updated!");
-
+            Application.getInstance().getUserSettingsMenuView().setVisible(true);
+            Application.getInstance().getPasswordSettingsView().setVisible(false);
         }
 
 
-        Application.getInstance().getUserSettingsMenuView().setVisible(true);
+
     }
 
     public void loadClose() {
         Application.getInstance().getPasswordSettingsView().setVisible(false);
-        //Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getUserSettingsMenuView().setVisible(true);
 
     }
 }

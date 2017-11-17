@@ -1,7 +1,5 @@
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
+
 
 public class DataAdapter {
     private Connection connection;
@@ -168,6 +166,7 @@ public class DataAdapter {
                 line.setProductID(resultSet.getInt(2));
                 line.setQuantity(resultSet.getDouble(3));
                 line.setCost(resultSet.getDouble(4));
+                assert order != null;
                 order.addLine(line);
             }
 

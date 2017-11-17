@@ -31,15 +31,17 @@ public class PaymentController implements ActionListener {
 
     public void loadCardPayment() {
         Application.getInstance().getCardPaymentView().setVisible(true);
+        Application.getInstance().getPaymentView().setVisible(false);
     }
 
     public void loadCashPayment() {
         Application.getInstance().getCashPaymentView().setVisible(true);
+        Application.getInstance().getPaymentView().setVisible(false);
 
     }
 
     public void loadClose() {
         Application.getInstance().getPaymentView().setVisible(false);
-        //Application.getInstance().getCheckoutView().setVisible(true);
+        Application.getInstance().getCheckoutView().setVisible(true);
     }
 }

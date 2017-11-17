@@ -40,7 +40,7 @@ public class CashPaymentController implements ActionListener {
 
     public void loadClose() {
         Application.getInstance().getCashPaymentView().setVisible(false);
-        //Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getCashierMenuView().setVisible(true);
 
     }
 }

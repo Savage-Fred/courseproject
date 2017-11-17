@@ -1,12 +1,4 @@
-import java.util.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Arrays;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.File;
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -17,6 +9,7 @@ import java.util.ArrayList;
  * @author William McCarty
  * @version 1.0
  */
+@SuppressWarnings("JavadocReference")
 public class OrderModel {
     ////////////////////////////////////
     //////	Fields
@@ -35,7 +28,7 @@ public class OrderModel {
     ////////////////////////////////////
     //////	 Methods
     ////////////////////////////////////
-    /**
+    /*
      * Constructor
      *
      * @param orderID
@@ -56,14 +49,14 @@ public class OrderModel {
         lines = new ArrayList<>();
     }
 
-    /**
+    /*
      * Default constructor
      */
     public OrderModel() {
         lines = new ArrayList<>();
     }
 
-    /**
+    /*
      * Clear the current order
      */
     public void clearOrder() {
@@ -72,7 +65,7 @@ public class OrderModel {
         this.subTotal 	= 0;
         this.products.clear();
     }
-    /**
+    /*
      * @return the total price of the order
      */
     public double calculateTotal() {
@@ -85,9 +78,9 @@ public class OrderModel {
         }
         */
 
-        for (int i = 0; i < products.size(); i ++) {
-            total = total + products.get(i).getProductPrice();
-            tax = tax + (products.get(i).getProductTaxRate() * products.get(i).getProductPrice());
+        for (ProductModel product : products) {
+            total = total + product.getProductPrice();
+            tax = tax + (product.getProductTaxRate() * product.getProductPrice());
         }
 
         this.subTotal = total;
@@ -96,7 +89,7 @@ public class OrderModel {
         return totalPrice;
     }
 
-    /**
+    /*
      * Calculate the subtotal of the order
      * @return subtotal of the order
      */
@@ -108,15 +101,15 @@ public class OrderModel {
         }
         */
 
-        for (int i = 0; i < products.size(); i ++) {
-            total = total + products.get(i).getProductPrice();
+        for (ProductModel product : products) {
+            total = total + product.getProductPrice();
         }
 
         this.subTotal = total;
         return total;
     }
 
-    /**
+    /*
      * Calculate the totalTax
      * @return total tax of the order
      */
@@ -128,15 +121,15 @@ public class OrderModel {
         }
         */
 
-        for (int i = 0; i < products.size(); i ++) {
-            tax = tax + (products.get(i).getProductTaxRate() * products.get(i).getProductPrice());
+        for (ProductModel product : products) {
+            tax = tax + (product.getProductTaxRate() * product.getProductPrice());
         }
 
         this.totalTax = tax;
         return tax;
     }
 
-    /**
+    /*
      * Add a product to the order
      * @param product of the product to be added
      */
@@ -144,7 +137,7 @@ public class OrderModel {
         this.products.add(prod);
     }
 
-    /**
+    /*
      * @param productid of the product to be added
      */
     public void addProduct(int pid) {

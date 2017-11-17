@@ -85,7 +85,7 @@ public class BusinessReportController implements ActionListener {
         }
         catch (NullPointerException e) {
                 JOptionPane.showMessageDialog(null, "Null pointer Throwen");
-                return;
+                //return;
             }
 
 
@@ -96,7 +96,7 @@ public class BusinessReportController implements ActionListener {
         System.out.println(orderLine.getProductID());
         ProductModel product = new ProductModel();
         if (dataAdapter.loadProduct((int)orderLine.getProductID()) != null) {
-            product.equals(dataAdapter.loadProduct((int)orderLine.getProductID()));
+            product = dataAdapter.loadProduct((int)orderLine.getProductID());
         }
         else {
             System.out.println("Class: BusinessReportController"
@@ -116,21 +116,31 @@ public class BusinessReportController implements ActionListener {
                 for (int j = 0; j < reports.size() - i - 1; j++) {
                     if (reports.elementAt(j).getUnitsSold() > reports.elementAt(j + 1).getUnitsSold()) {
 
-                        // Swap temp and current report
-                        ReportModel temp = reports.elementAt(j);
-                        reports.elementAt(j).equals(reports.elementAt(j + 1));
-                        reports.elementAt(j + 1).equals(temp);
+                        swapReports(j, j + 1);
                     }
                 }
-            }
-            loadTable();
+                loadTable();
 
-            JOptionPane.showMessageDialog(null, "Report has been loaded");
+                JOptionPane.showMessageDialog(null, "Report has been loaded");
+            }
         }
         catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Null Pointer Thrown");
-            return;
+            //return;
         }
+    }
+
+    public void swapReports(int x, int y) {
+        ReportModel temp = reports.elementAt(x);
+
+        reports.elementAt(x).setItemName(reports.elementAt(y).getItemName());
+        reports.elementAt(x).setRevenue(reports.elementAt(y).getRevenue());
+        reports.elementAt(x).setUnitsSold(reports.elementAt(y).getUnitsSold());
+
+        reports.elementAt(y).setItemName(temp.getItemName());
+        reports.elementAt(y).setRevenue(temp.getRevenue());
+        reports.elementAt(y).setUnitsSold(temp.getUnitsSold());
+
     }
 
 
@@ -149,7 +159,7 @@ public class BusinessReportController implements ActionListener {
 
     public void loadClose() {
         Application.getInstance().getBusinessReportView().setVisible(false);
-        //Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getReportMenuView().setVisible(true);
     }
 
 

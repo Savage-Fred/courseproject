@@ -24,19 +24,19 @@ public class SearchInventoryController implements ActionListener{
     }
 
     public void searchItem() {
-        int productID;
+        int productID = 0;
         ProductModel product = new ProductModel();
         try {
             productID = Integer.parseInt(searchInventoryView.getItemField().getText());
         }
         catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Invalid product ID! Please provide a valid product ID!");
-            return;
+            //return;
         }
 
         if (dataAdapter.loadProduct(productID) == null) {
             JOptionPane.showMessageDialog(null, "Invalid product ID! Product ID does not exist!");
-            return;
+            //return;
         } else {
             // Set Next view's Fields with selected product
             Application.getInstance().getEditItemInventoryController().loadTable(productID);
@@ -51,6 +51,7 @@ public class SearchInventoryController implements ActionListener{
     public void loadClose() {
 
         Application.getInstance().getSearchInventoryView().setVisible(false);
+        Application.getInstance().getManagerMenuView().setVisible(true);
 
     }
 

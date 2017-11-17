@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -62,7 +61,7 @@ public class CashierMenuController implements ActionListener {
 
         Application.getInstance().getLoginScreenView().setVisible(true);
         Application.getInstance().getCashierMenuView().setVisible(false);
-        
+
         dataAdapter.logoutUser();
     }
 }

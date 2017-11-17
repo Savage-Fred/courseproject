@@ -26,11 +26,13 @@ public class SystemSettingsController implements ActionListener {
 
     public void loadAddNewUser() {
         Application.getInstance().getAddNewUserView().setVisible(true);
+        Application.getInstance().getSystemSettingsView().setVisible(false);
+
     }
 
 
     public void loadClose() {
         Application.getInstance().getSystemSettingsView().setVisible(false);
-        //Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getManagerMenuView().setVisible(true);
     }
 }

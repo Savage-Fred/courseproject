@@ -1,9 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
+
 
 public class ManageInventoryController implements ActionListener {
 
@@ -57,7 +55,7 @@ public class ManageInventoryController implements ActionListener {
 
     public void loadClose() {
         Application.getInstance().getManageInventoryView().setVisible(false);
-        //Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getManagerMenuView().setVisible(true);
     }
 
     public void loadTable() {

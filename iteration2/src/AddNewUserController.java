@@ -59,14 +59,14 @@ public class AddNewUserController implements ActionListener {
 
         if(dataAdapter.saveUser(user)) {
             JOptionPane.showMessageDialog(null, "New user saved to the System!");
-        }
 
-        Application.getInstance().getSystemSettingsView().setVisible(true);
-        Application.getInstance().getAddNewUserView().setVisible(false);
+            Application.getInstance().getSystemSettingsView().setVisible(true);
+            Application.getInstance().getAddNewUserView().setVisible(false);
+        }
     }
 
     public void loadClose() {
         Application.getInstance().getAddNewUserView().setVisible(false);
-        //Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getSystemSettingsView().setVisible(true);
     }
 }

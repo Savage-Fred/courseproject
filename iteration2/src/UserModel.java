@@ -1,14 +1,5 @@
 import java.util.*;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-import java.util.Arrays;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.File;
-import java.util.Iterator;
+
 
 
 /**
@@ -101,7 +92,7 @@ public class UserModel {
         }
         return jobTitle;
     }
-    /**
+    /*
      *
      * @param 	path to image - String
      * @throws 	FileNotFoundException if image not found

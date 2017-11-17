@@ -1,15 +1,8 @@
 import java.util.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Arrays;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.File;
-import java.util.Iterator;
 
 
-/**
+
+/*
  *
  *
  * @author William McCarty
@@ -31,7 +24,7 @@ public class ProductModel {
     ////// 	Constructors
     ////////////////////////////////////
 
-    /**
+    /*
      * Default Constructor
      */
     public ProductModel() {
@@ -43,14 +36,13 @@ public class ProductModel {
         this.productExpirationDate 	= null;
     }
 
-    /**
+    /*
      * Consturctor for productmodel
      *
-     * @param productID
      * @param productName
      * @param productDescription
      * @param productPrice
-     * @param productTaxRate
+     * @para productTaxRate
      * @param productExpirationDate
      */
     public ProductModel(int pid, String name, String desc, double price, double tax, Date expdate) {

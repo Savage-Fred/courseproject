@@ -1,5 +1,3 @@
-import sun.security.krb5.internal.APOptions;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -45,18 +43,27 @@ public class UserSettingsController implements ActionListener  {
 
     public void loadChangePassword() {
         Application.getInstance().getPasswordSettingsView().setVisible(true);
+        Application.getInstance().getUserSettingsMenuView().setVisible(false);
 
     }
 
     public void loadChangePicture() {
         Application.getInstance().getPhotoSettingsView().setVisible(true);
+        Application.getInstance().getUserSettingsMenuView().setVisible(false);
 
     }
 
     public void loadClose() {
         Application.getInstance().getUserSettingsMenuView().setVisible(false);
-        //Application.getInstance().getLoginScreenView().setVisible(true);
 
+        if (dataAdapter.getCurrentUser().getIsManager() == 0 || dataAdapter.getCurrentUser().getIsManager() == 1) {
+            if (dataAdapter.getCurrentUser().getIsManager() == 1) {
+                Application.getInstance().getManagerMenuView().setVisible(true);
+            } else {
+                Application.getInstance().getCashierMenuView().setVisible(true);
+
+            }
+        }
     }
 
 }

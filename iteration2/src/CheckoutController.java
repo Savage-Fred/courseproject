@@ -40,6 +40,7 @@ public class CheckoutController implements ActionListener {
 
     public void loadPayment() {
         Application.getInstance().getPaymentView().setVisible(true);
+        Application.getInstance().getCheckoutView().setVisible(false);
     }
 
     public void loadLoyaltyProgram() {
@@ -55,7 +56,7 @@ public class CheckoutController implements ActionListener {
 
     public void loadClose() {
         Application.getInstance().getCheckoutView().setVisible(false);
-        //Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getCashierMenuView().setVisible(true);
     }
 
 

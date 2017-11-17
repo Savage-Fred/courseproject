@@ -3,6 +3,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class EditItemInventoryView extends JFrame{
+
     private JLabel editItemInventoryLabel = new JLabel("Edit Item");
     private JLabel itemNameLabel = new JLabel("Item Name");
     private JLabel itemPriceLabel = new JLabel("Item Price");

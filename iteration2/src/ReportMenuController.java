@@ -49,6 +49,6 @@ public class ReportMenuController implements ActionListener {
 
     public void loadClose() {
         Application.getInstance().getReportMenuView().setVisible(false);
-        //Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getManagerMenuView().setVisible(true);
     }
 }

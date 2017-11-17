@@ -23,6 +23,6 @@ public class CardPaymentController implements ActionListener {
 
     public void loadClose() {
         Application.getInstance().getCardPaymentView().setVisible(false);
-        //Application.getInstance().getLoginScreenView().setVisible(true);
+        Application.getInstance().getCashierMenuView().setVisible(true);
     }
 }
