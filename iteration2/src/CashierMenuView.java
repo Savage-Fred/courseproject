@@ -24,7 +24,9 @@ public class CashierMenuView extends JFrame {
 
         // TODO: Create JPanel for profile picture
 
-        this.getContentPane().add(storeLabel);
+        JPanel panelTitle = new JPanel();
+        panelTitle.add(storeLabel);
+        this.getContentPane().add(panelTitle);
 
         JPanel panelUsername = new JPanel();
         panelUsername.add(usernameLabel);

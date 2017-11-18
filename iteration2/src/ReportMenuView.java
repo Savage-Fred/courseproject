@@ -13,6 +13,10 @@ public class ReportMenuView extends JFrame {
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.setSize(500, 200);
 
+        JPanel panelTitle = new JPanel();
+        panelTitle.add(reportMenuLabel);
+        this.getContentPane().add(panelTitle);
+
         JPanel panelButton = new JPanel();
         panelButton.add(businessReportButton);
         panelButton.add(employeeReportButton);

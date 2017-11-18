@@ -15,16 +15,20 @@ public class PhotoSettingsView extends JFrame {
 
     public PhotoSettingsView() {
         this.setTitle("Store Manager");
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         this.setSize(500, 200);
 
-        this.getContentPane().add(photoSettingsLabel);
+        JPanel panelTitle = new JPanel();
+        panelTitle.add(photoSettingsLabel);
+        this.getContentPane().add(panelTitle);
 
         JPanel panelUserInput = new JPanel();
+        //panelUserInput.setLayout(new BoxLayout(panelUserInput, BoxLayout.Y_AXIS));
         panelUserInput.add(newImageURLField);
         panelUserInput.add(newPhotoURLLabel);
         newImageURLField.setHorizontalAlignment(JTextField.RIGHT);
         this.getContentPane().add(panelUserInput);
+
 
         JPanel panelButton = new JPanel();
         panelButton.add(changePicture);

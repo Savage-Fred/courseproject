@@ -64,6 +64,8 @@ public class Application {
 
     private UserSettingsMenuView userSettingsMenuView = new UserSettingsMenuView();
 
+    private OrderSelectionView orderSelectionView = new OrderSelectionView();
+
 
     // View Controllers
 
@@ -102,6 +104,8 @@ public class Application {
     private SystemSettingsController systemSettingsController;
 
     private UserSettingsController userSettingsController;
+
+    private OrderSelectionController orderSelectionController;
 
 
     // Product View and Controller Get Methods
@@ -242,6 +246,14 @@ public class Application {
         return cashierMenuController;
     }
 
+    public OrderSelectionController getOrderSelectionController() {
+        return orderSelectionController;
+    }
+
+    public OrderSelectionView getOrderSelectionView() {
+        return orderSelectionView;
+    }
+
     public DataAdapter getDataAdapter() {
 
         return dataAdapter;
@@ -299,6 +311,8 @@ public class Application {
 
         // Create data adapter here!
         dataAdapter = new DataAdapter(connection);
+
+        orderSelectionController = new OrderSelectionController(orderSelectionView, dataAdapter);
 
         addItemInventoryController = new AddItemInventoryController(addItemInventoryView, dataAdapter);
 

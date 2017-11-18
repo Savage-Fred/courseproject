@@ -149,10 +149,10 @@ public class DataAdapter {
 
             if (resultSet.next()) {
                 order = new OrderModel();
-                order.setOrderID(resultSet.getInt("OrderID"));
-                order.setCustomer(resultSet.getString("Customer"));
-                order.setTotalPrice(resultSet.getDouble("TotalCost"));
-                order.setOrderDate(resultSet.getDate("OrderDate"));
+                order.setOrderID(resultSet.getInt("order_id"));
+                order.setCustomer(resultSet.getInt("customer_id"));
+                order.setTotalPrice(resultSet.getDouble("total_price"));
+                //order.setOrderDate(resultSet.getDate("order_date"));
                 resultSet.close();
                 statement.close();
             }
@@ -184,7 +184,7 @@ public class DataAdapter {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO orders VALUES (?, ?, ?, ?, ?)");
             statement.setInt(1, order.getOrderID());
             statement.setDate(2, order.getOrderDate());
-            statement.setString(3, order.getCustomer());
+            statement.setInt(3, order.getCustomer());
             statement.setDouble(4, order.getTotalPrice());
             statement.setDouble(5, order.getTotalTax());
 

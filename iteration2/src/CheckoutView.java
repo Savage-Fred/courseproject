@@ -15,10 +15,11 @@ public class CheckoutView extends JFrame {
     private JButton manualEntryButton = new JButton("Manual Entry");
     private JButton closeButton = new JButton("Close");
 
+
     public CheckoutView() {
         this.setTitle("Store Manager");
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
-        this.setSize(500, 200);
+        this.setSize(600, 300);
 
         cart.addColumn("Product ID");
         cart.addColumn("Name");
@@ -27,7 +28,7 @@ public class CheckoutView extends JFrame {
         cart.addColumn("Cost");
 
         JPanel panelOrder = new JPanel();
-        panelOrder.setPreferredSize(new Dimension(400, 450));
+        panelOrder.setPreferredSize(new Dimension(500, 450));
         panelOrder.setLayout(new BoxLayout(panelOrder, BoxLayout.PAGE_AXIS));
         currentCart.setBounds(0, 0, 400, 350);
         panelOrder.add(currentCart.getTableHeader());

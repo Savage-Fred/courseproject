@@ -44,6 +44,8 @@ public class SearchInventoryController implements ActionListener{
             // Open next view and close current View
             Application.getInstance().getEditItemInventoryView().setVisible(true);
             Application.getInstance().getSearchInventoryView().setVisible(false);
+            Application.getInstance().getSearchInventoryView().clearTable();
+
         }
 
     }
@@ -51,7 +53,9 @@ public class SearchInventoryController implements ActionListener{
     public void loadClose() {
 
         Application.getInstance().getSearchInventoryView().setVisible(false);
-        Application.getInstance().getManagerMenuView().setVisible(true);
+        Application.getInstance().getManageInventoryController().loadTable();
+        Application.getInstance().getManageInventoryView().setVisible(true);
+        Application.getInstance().getSearchInventoryView().clearTable();
 
     }
 

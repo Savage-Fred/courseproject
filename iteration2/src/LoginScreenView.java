@@ -15,7 +15,9 @@ public class LoginScreenView extends JFrame {
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.setSize(500, 200);
 
-        this.getContentPane().add(storeLabel);
+        JPanel panelTitle = new JPanel();
+        panelTitle.add(storeLabel);
+        this.getContentPane().add(panelTitle);
 
         JPanel panelUsername = new JPanel();
         panelUsername.add(new JLabel("Username:"));

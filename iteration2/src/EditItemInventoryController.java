@@ -106,6 +106,9 @@ public class EditItemInventoryController implements ActionListener {
 
     public void loadClose() {
         Application.getInstance().getEditItemInventoryView().setVisible(false);
+        Application.getInstance().getEditItemInventoryView().clearTable();
+        Application.getInstance().getManageInventoryController().loadTable();
         Application.getInstance().getManageInventoryView().setVisible(true);
+
     }
 }

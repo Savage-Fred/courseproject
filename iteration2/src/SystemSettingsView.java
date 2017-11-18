@@ -8,8 +8,12 @@ public class SystemSettingsView extends JFrame {
 
     public SystemSettingsView() {
         this.setTitle("Store Manager");
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         this.setSize(500, 200);
+
+        JPanel panelTitle = new JPanel();
+        panelTitle.add(systemSettingsLabel);
+        this.getContentPane().add(panelTitle);
 
         JPanel panelButton = new JPanel();
         panelButton.add(newUserButton);

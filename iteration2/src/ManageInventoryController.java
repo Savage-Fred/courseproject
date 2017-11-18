@@ -37,6 +37,7 @@ public class ManageInventoryController implements ActionListener {
         Application.getInstance().getAddItemInventoryController().loadTable();
         Application.getInstance().getAddItemInventoryView().setVisible(true);
         Application.getInstance().getManageInventoryView().setVisible(false);
+        Application.getInstance().getManageInventoryView().clearTable();
     }
 
     public void loadEditItem() {
@@ -44,7 +45,7 @@ public class ManageInventoryController implements ActionListener {
         Application.getInstance().getSearchInventoryController().loadTable();
         Application.getInstance().getSearchInventoryView().setVisible(true);
         Application.getInstance().getManageInventoryView().setVisible(false);
-
+        Application.getInstance().getManageInventoryView().clearTable();
     }
 
     public void loadDeleteItem() {
@@ -56,6 +57,8 @@ public class ManageInventoryController implements ActionListener {
     public void loadClose() {
         Application.getInstance().getManageInventoryView().setVisible(false);
         Application.getInstance().getManagerMenuView().setVisible(true);
+        Application.getInstance().getManageInventoryView().clearTable();
+
     }
 
     public void loadTable() {

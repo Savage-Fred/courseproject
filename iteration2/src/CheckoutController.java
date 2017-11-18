@@ -44,6 +44,7 @@ public class CheckoutController implements ActionListener {
     }
 
     public void loadLoyaltyProgram() {
+
         JOptionPane.showMessageDialog(null, "Available in Future Versions");
 
     }
@@ -56,7 +57,7 @@ public class CheckoutController implements ActionListener {
 
     public void loadClose() {
         Application.getInstance().getCheckoutView().setVisible(false);
-        Application.getInstance().getCashierMenuView().setVisible(true);
+        Application.getInstance().getOrderSelectionView().setVisible(true);
     }
 
 

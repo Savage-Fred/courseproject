@@ -44,7 +44,7 @@ public class CashierMenuController implements ActionListener {
 
     public void loadCheckout() {
 
-        Application.getInstance().getCheckoutView().setVisible(true);
+        Application.getInstance().getOrderSelectionView().setVisible(true);
         Application.getInstance().getCashierMenuView().setVisible(false);
 
     }

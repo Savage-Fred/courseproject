@@ -17,7 +17,7 @@ public class ManageInventoryView extends JFrame {
     public ManageInventoryView() {
         this.setTitle("Store Manager");
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
-        this.setSize(500, 200);
+        this.setSize(500, 300);
 
         items.addColumn("Product ID");
         items.addColumn("Name");
@@ -54,6 +54,14 @@ public class ManageInventoryView extends JFrame {
         return deleteItemButton;
     }
 
+    public void setItems(DefaultTableModel items) {
+        this.items = items;
+    }
+
+    public DefaultTableModel getItems() {
+        return items;
+    }
+
     public JButton getCloseButton() {
         return closeButton;
     }
@@ -61,5 +69,9 @@ public class ManageInventoryView extends JFrame {
     public void addRow(Object[] row) {
         items.addRow(row);              // add a row to list of item!
         items.fireTableDataChanged();
+    }
+
+    public void clearTable(){
+        items.setRowCount(0);
     }
 }

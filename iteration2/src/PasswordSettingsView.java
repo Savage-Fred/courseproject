@@ -22,6 +22,11 @@ public class PasswordSettingsView extends JFrame {
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.setSize(500, 200);
 
+        JPanel panelTitle = new JPanel();
+        panelTitle.add(changePasswordLabel);
+        this.getContentPane().add(panelTitle);
+
+
         JPanel panelCurrPass = new JPanel();
         panelCurrPass.add(currentPasswordLabel);
         panelCurrPass.add(currentPasswordField);

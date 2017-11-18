@@ -62,4 +62,8 @@ public class SearchInventoryView extends JFrame {
         items.addRow(row);              // add a row to list of item!
         items.fireTableDataChanged();
     }
+
+    public void clearTable(){
+        items.setRowCount(0);
+    }
 }

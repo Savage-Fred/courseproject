@@ -110,8 +110,10 @@ public class AddItemInventoryController implements ActionListener {
     }
 
     public void loadClose() {
+        Application.getInstance().getManageInventoryController().loadTable();
         Application.getInstance().getManageInventoryView().setVisible(true);
         Application.getInstance().getAddItemInventoryView().setVisible(false);
+        Application.getInstance().getAddItemInventoryView().clearTable();
 
 
     }

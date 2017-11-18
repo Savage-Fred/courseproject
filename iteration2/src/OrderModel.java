@@ -19,7 +19,7 @@ public class OrderModel {
     private double 	totalTax;
     private double 	subTotal;
     private java.sql.Date  orderDate;
-    private String  customer;
+    private int  customerId;
     private ArrayList<ProductModel> products;
     private ArrayList<OrderLine> lines;
 
@@ -162,7 +162,7 @@ public class OrderModel {
     public void setTotalTax		(double t) 	{ this.totalTax 	= t;}
     public void setSubTotal		(double t) 	{ this.subTotal 	= t;}
     public void setTotalPrice	(double p) 	{ this.totalPrice 	= p;}
-    public void setCustomer 	(String cust) {this.customer 	= cust;}
+    public void setCustomer 	(int cust) {this.customerId 	= cust;}
     public void setProducts		(ArrayList<ProductModel> prodin) { this.products = prodin;}
 
     ////////////////////////////////////
@@ -173,7 +173,7 @@ public class OrderModel {
     public double 	getTotalPrice() { return this.totalPrice;}
     public double 	getSubTotal() 	{ return this.subTotal;}
     public double 	getTotalTax() 	{ return this.totalTax;}
-    public String 	getCustomer() 	{ return this.customer;}
+    public int 	getCustomer() 	{ return this.customerId;}
     public List<OrderLine> getLines() { return lines;}
     public ArrayList<ProductModel> getProducts() { return this.products;}
 
