@@ -117,10 +117,10 @@ public class DataAdapter {
 
             if (resultSet.next()) { // this product exists, update its fields
                 statement = connection.prepareStatement("UPDATE products SET product_name = ?, unit_price = ?, quantity = ? WHERE product_id = ?");
-                statement.setString(1, product.getProductName());
-                statement.setDouble(2, product.getProductPrice());
-                statement.setDouble(3, product.getProductQuantity());
-                statement.setInt(4, product.getProductID());
+                statement.setString(2, product.getProductName());
+                statement.setDouble(3, product.getProductPrice());
+                statement.setDouble(4, product.getProductQuantity());
+                statement.setInt(1, product.getProductID());
             }
             else { // this product does not exist, use insert into
                 statement = connection.prepareStatement("INSERT INTO products VALUES (?, ?, ?, ?)");
@@ -162,10 +162,9 @@ public class DataAdapter {
 
             while (resultSet.next()) {
                 OrderLine line = new OrderLine();
-                line.setOrderID(resultSet.getInt(1));
-                line.setProductID(resultSet.getInt(2));
-                line.setQuantity(resultSet.getDouble(3));
-                line.setCost(resultSet.getDouble(4));
+                line.setOrderID(resultSet.getInt(2));
+                line.setProductID(resultSet.getInt(3));
+                line.setQuantity(resultSet.getDouble(4));
                 assert order != null;
                 order.addLine(line);
             }
@@ -179,28 +178,116 @@ public class DataAdapter {
         }
     }
 
-    public boolean saveOrder(OrderModel order) {
+    public int loadProductInOrder() {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO orders VALUES (?, ?, ?, ?, ?)");
+            int latestSessionID = -1;
+            Statement statement = connection.createStatement();
+
+            // loading the order lines for this order
+            ResultSet resultSet = statement.executeQuery("SELECT pio_id FROM products_in_order ORDER BY pio_id DESC " );
+
+            if (resultSet.next()) {
+                latestSessionID = resultSet.getInt("pio_id");
+                System.out.println("Latest session_id : " + latestSessionID);
+
+            }
+
+
+            return (latestSessionID + 1);
+
+        } catch (SQLException e) {
+            System.out.println("Database access error!");
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+
+        public boolean saveOrder(OrderModel order) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM orders WHERE order_id = ?");
+
             statement.setInt(1, order.getOrderID());
-            statement.setDate(2, order.getOrderDate());
-            statement.setInt(3, order.getCustomer());
-            statement.setDouble(4, order.getTotalPrice());
-            statement.setDouble(5, order.getTotalTax());
 
-            statement.execute();    // commit to the database;
-            statement.close();
+            ResultSet resultSet = statement.executeQuery();
 
-            statement = connection.prepareStatement("INSERT INTO products_in_order VALUES (?, ?, ?, ?)");
-            for (OrderLine line: order.getLines()) { // store for each order line!
-                statement.setInt(1, line.getOrderID());
-                statement.setInt(2, line.getProductID());
-                statement.setDouble(3, line.getQuantity());
-                statement.setDouble(4, line.getCost());
+            if (resultSet.next()) //User exist, update its fields
+            {
+                statement = connection.prepareStatement("UPDATE orders SET total_price = ? WHERE order_id = ?");
+                statement.setInt(2, order.getOrderID());
+                statement.setDouble(1, order.getTotalPrice());
+
+                statement.execute();
+                statement.close();
+
+                int newPIO = loadProductInOrder();
+
+                statement = connection.prepareStatement("SELECT * FROM products_in_order WHERE order_id = ?");
+
+                statement.setInt(1, order.getOrderID());
+                ResultSet resultSet2 = statement.executeQuery();
+                int size = 0;
+                while (resultSet2.next())
+                {
+                    size++;
+                }
+
+
+                statement.close();
+
+                statement = connection.prepareStatement("INSERT INTO products_in_order VALUES (?, ?, ?, ?)");
+                int i = 1;
+                for(OrderLine line: order.getLines()) {
+
+                    if (i > size) {
+
+                    statement.setInt(1, newPIO);
+                    statement.setInt(2, order.getOrderID());
+                    statement.setInt(3, line.getProductID());
+                    statement.setDouble(4, line.getQuantity());
+                    statement.execute();    // commit to the database;
+
+                    }
+
+                    i++;
+                    newPIO++;
+
+                }
+                statement.close();
+
+
+            } else {
+                statement = connection.prepareStatement("INSERT INTO orders VALUES (?, ?, ?, ?, ?, ? , ? )");
+
+                statement.setInt(1, order.getOrderID());
+                statement.setDate(2, order.getOrderDate());
+                statement.setInt(3, order.getCustomer());
+                statement.setDouble(4, order.getTotalPrice());
+                statement.setDouble(5, order.getTotalTax());
 
                 statement.execute();    // commit to the database;
+                statement.close();
+
+                statement = connection.prepareStatement("INSERT INTO products_in_order VALUES (?, ?, ?, ?)");
+                int newPIO = loadProductInOrder();
+
+
+                for (OrderLine line : order.getLines()) { // store for each order line!
+
+                    System.out.println(newPIO);
+
+
+                    statement.setInt(1, newPIO);
+                    statement.setInt(2, line.getOrderID());
+                    statement.setInt(3, line.getProductID());
+                    statement.setDouble(4, line.getQuantity());
+
+                    newPIO++;
+
+                    statement.execute();    // commit to the database;
+                }
+                statement.close();
             }
-            statement.close();
             return true; // save successfully!
         }
         catch (SQLException e) {
@@ -264,7 +351,7 @@ public class DataAdapter {
                 System.out.println("Made it here");
 
             } else {
-                statement = connection.prepareStatement("INSERT INTO orders VALUES (?, ?, ?, ?, ?, ? , ?, ?)");
+                statement = connection.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?, ?, ? , ?, ?)");
                 statement.setInt(1, userInput.getUserID());
                 statement.setString(2, userInput.getDisplayName());
                 statement.setString(3, userInput.getName());

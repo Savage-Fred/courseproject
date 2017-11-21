@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -5,6 +6,14 @@ public class CashPaymentController implements ActionListener {
 
     private CashPaymentView cashPaymentView;
     private DataAdapter dataAdapter;
+
+    public int currentOrderId;
+
+    public double total;
+
+
+    OrderModel order = null;
+
 
     public CashPaymentController(CashPaymentView view, DataAdapter data) {
         this.cashPaymentView = view;
@@ -17,7 +26,7 @@ public class CashPaymentController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == cashPaymentView.getPrintReceiptButton()) {
-            printReciept();
+            printReceipt();
         } else if (e.getSource() == cashPaymentView.getCloseButton()) {
             loadClose();
         }
@@ -25,16 +34,36 @@ public class CashPaymentController implements ActionListener {
     }
 
 
-    public void calculateChange() {
-        // TODO: Check for valid user inputs
-        // TODO: Calculate Change
+    public void calculateTotal() {
+        order = new OrderModel();
+        if (dataAdapter.loadOrder(currentOrderId) != null) {
+            order = dataAdapter.loadOrder(currentOrderId);
+
+            this.cashPaymentView.getTotalLabel().setText("Total: " + order.getTotalPrice());
+            this.total = order.getTotalPrice();
+            cashPaymentView.invalidate();
+        }
+
+
     }
 
-    public void printReciept() {
-        // TODO: Add Message Dialog Box with printed receipt
-        // TODO: Save Order to Database
 
-        Application.getInstance().getCashierMenuView().setVisible(true);
+    public void printReceipt() {
+        double change;
+        double cashGiven = Double.parseDouble(cashPaymentView.getCashGivenField().getText());
+
+
+        if (cashGiven < total){
+            JOptionPane.showMessageDialog(null, "Not enough cash! Please provide more money in order to purchase items!");
+            return;
+        }
+
+        change = cashGiven - total;
+
+        cashPaymentView.setChangeField(change);
+
+        cashPaymentView.getPrintReceiptButton().setVisible(false);
+
 
     }
 
@@ -42,5 +71,9 @@ public class CashPaymentController implements ActionListener {
         Application.getInstance().getCashPaymentView().setVisible(false);
         Application.getInstance().getCashierMenuView().setVisible(true);
 
+    }
+
+    public void setCurrentOrderId(int currentOrderId) {
+        this.currentOrderId = currentOrderId;
     }
 }

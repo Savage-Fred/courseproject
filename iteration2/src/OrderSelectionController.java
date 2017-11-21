@@ -36,22 +36,29 @@ public class OrderSelectionController implements ActionListener{
     public void loadPreviousOrder() {
 
         String id = JOptionPane.showInputDialog("Enter Order ID: ");
-        if (dataAdapter.loadOrder(Integer.parseInt(id)) != null) {
-            OrderModel order = dataAdapter.loadOrder(Integer.parseInt(id));
 
-        }
-        else {
+        System.out.println(id);
+        if (dataAdapter.loadOrder(Integer.parseInt(id)) != null) {
+            Application.getInstance().getCheckoutController().loadTable(Integer.parseInt(id));
+            Application.getInstance().getCheckoutController().setCurrentOrderId(Integer.parseInt(id));
+            Application.getInstance().getCheckoutView().setVisible(true);
+            Application.getInstance().getOrderSelectionView().setVisible(false);
+
+        } else {
             JOptionPane.showMessageDialog(null, "This order does not exist!");
             return;
         }
 
-        Application.getInstance().getCheckoutView().setVisible(true);
-        Application.getInstance().getOrderSelectionView().setVisible(false);
     }
 
     public void createNewOrder() {
 
         Application.getInstance().getCheckoutView().setVisible(true);
+        int newOrderId = 0;
+        for(int i = 1; dataAdapter.loadOrder(i) != null; i++) {
+            newOrderId = i;
+        }
+        Application.getInstance().getCheckoutController().setCurrentOrderId(newOrderId);
         Application.getInstance().getOrderSelectionView().setVisible(false);
     }
 
@@ -60,4 +67,6 @@ public class OrderSelectionController implements ActionListener{
         Application.getInstance().getOrderSelectionView().setVisible(false);
         Application.getInstance().getCashierMenuView().setVisible(true);
     }
+
+
 }

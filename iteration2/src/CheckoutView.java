@@ -62,9 +62,20 @@ public class CheckoutView extends JFrame {
         return manualEntryButton;
     }
 
+    public JLabel getTotalLabel() {
+        return totalLabel;
+    }
+
     public void addRow(Object[] row) {
         cart.addRow(row);              // add a row to list of item!
         cart.fireTableDataChanged();
     }
 
+    public void clearTable(){
+        cart.setRowCount(0);
+    }
+
+    public void setTotalLabel(String totalLabel) {
+        this.totalLabel.setText(totalLabel);
+    }
 }

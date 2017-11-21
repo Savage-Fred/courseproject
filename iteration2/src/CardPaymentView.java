@@ -12,6 +12,10 @@ public class CardPaymentView extends JFrame {
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.setSize(500, 200);
 
+        JPanel panelTitle = new JPanel();
+        panelTitle.add(cardPaymentLabel);
+        this.getContentPane().add(panelTitle);
+
         JPanel panelPrompt = new JPanel();
         panelPrompt.add(payInstructionLabel);
         this.getContentPane().add(panelPrompt);

@@ -326,7 +326,7 @@ public class Application {
 
         cashPaymentController = new CashPaymentController(cashPaymentView, dataAdapter);
 
-        checkoutController = new CheckoutController(checkoutView, dataAdapter);
+        //checkoutController = new CheckoutController(checkoutView, dataAdapter);
 
         editItemInventoryController = new EditItemInventoryController(editItemInventoryView, dataAdapter);
 
