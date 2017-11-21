@@ -33,55 +33,43 @@ public class BusinessReportController implements ActionListener {
     public void loadOrders(){
         OrderLine orderLine;
         try {
-
-            for (int productIdIn = 1; dataAdapter.loadProduct(productIdIn) != null; productIdIn++) {
-                Vector<OrderLine> orders = new Vector<>();
-                for (int pioIn = 1; dataAdapter.loadProductforReport(pioIn) != null; pioIn++) {
-                    if (dataAdapter.loadProductforReport(productIdIn, pioIn) != null) {
-
-                        orderLine = dataAdapter.loadProductforReport(productIdIn, pioIn);
-                        orderLine = setOrderLineCost(orderLine);
-                        orders.add(orderLine);
-
-                    } else {
-                        System.out.println("Class: BusinessReportController"
-                                + "\nMethod: loadOrders"
-                                + "\nNull Order Return");
-                    }
-                }
-
-                ReportModel report = new ReportModel();
-
-                // Calculate Revenue
-                double revenue = 0;
-                for (int i = 0; i < orders.size(); i++) {
-                    revenue += orders.elementAt(i).getCost();
-                }
-
-                report.setRevenue(revenue);
-
-                //Calculate Units Sold
-                int unitsSold = 0;
-                for (int i = 0; i < orders.size(); i++) {
-                    unitsSold += orders.elementAt(i).getQuantity();
-                }
-
-                report.setUnitsSold(unitsSold);
-
-                //Get Item name
-                if (dataAdapter.loadProduct(orders.elementAt(0).getProductID()).getProductName() != null) {
-
-                    String itemName = dataAdapter.loadProduct(orders.elementAt(0).getProductID()).getProductName();
-                    report.setItemName(itemName);
-                } else {
-                    System.out.println("Class: BusinessReportController"
-                            + "\nMethod: loadOrders"
-                            + "\nNull Product Return");
-                }
-
-                reports.add(report);
-
+            Vector<OrderLine> orders = new Vector<>();
+            for (int pioIn = 1; dataAdapter.loadProductforReport(pioIn) != null; pioIn++) {
+                orderLine = dataAdapter.loadProductforReport(pioIn);
+                orderLine = setOrderLineCost(orderLine);
+                System.out.println("Product ID: " + orderLine.getProductID());
+                orders.add(orderLine);
             }
+
+            ReportModel report = new ReportModel();
+            // Calculate Revenue
+            double revenue = 0;
+            for (int i = 0; i < orders.size(); i++) {
+                revenue += orders.elementAt(i).getCost();
+            }
+            report.setRevenue(revenue);
+            //Calculate Units Sold
+            int unitsSold = 0;
+            for (int i = 0; i < orders.size(); i++) {
+                unitsSold += orders.elementAt(i).getQuantity();
+            }
+
+            report.setUnitsSold(unitsSold);
+
+            //Get Item name
+            if (dataAdapter.loadProduct(orders.elementAt(0).getProductID()).getProductName() != null) {
+
+                String itemName = dataAdapter.loadProduct(orders.elementAt(0).getProductID()).getProductName();
+                report.setItemName(itemName);
+            } else {
+                System.out.println("Class: BusinessReportController"
+                        + "\nMethod: loadOrders"
+                        + "\nNull Product Return");
+            }
+
+            reports.add(report);
+
+
         }
         catch (NullPointerException e) {
                 JOptionPane.showMessageDialog(null, "Null pointer Throwen");
@@ -171,7 +159,7 @@ public class BusinessReportController implements ActionListener {
 
         for (int i = 1; i < reports.size(); i++) {
             report = reports.elementAt(i);
-            Object[] row = new Object[5];
+            Object[] row = new Object[3];
             row[0] = report.getItemName();
             row[1] = report.getUnitsSold();
             row[2] = report.getRevenue();

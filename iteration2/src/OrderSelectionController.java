@@ -39,10 +39,12 @@ public class OrderSelectionController implements ActionListener{
 
         System.out.println(id);
         if (dataAdapter.loadOrder(Integer.parseInt(id)) != null) {
+            Application.getInstance().getCheckoutView().clearTable();
             Application.getInstance().getCheckoutController().loadTable(Integer.parseInt(id));
             Application.getInstance().getCheckoutController().setCurrentOrderId(Integer.parseInt(id));
             Application.getInstance().getCheckoutView().setVisible(true);
             Application.getInstance().getOrderSelectionView().setVisible(false);
+
 
         } else {
             JOptionPane.showMessageDialog(null, "This order does not exist!");
@@ -52,7 +54,7 @@ public class OrderSelectionController implements ActionListener{
     }
 
     public void createNewOrder() {
-
+        Application.getInstance().getCheckoutView().clearTable();
         Application.getInstance().getCheckoutView().setVisible(true);
         int newOrderId = 0;
         for(int i = 1; dataAdapter.loadOrder(i) != null; i++) {

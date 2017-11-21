@@ -50,7 +50,7 @@ public class DataAdapter {
 
     public OrderLine loadProductforReport(int id) {
         try {
-            String query = "SELECT * FROM products_in_order WHERE product_id = " + id;
+            String query = "SELECT * FROM products_in_order WHERE pio_id = " + id;
 
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -123,10 +123,10 @@ public class DataAdapter {
                 statement.setInt(1, product.getProductID());
             }
             else { // this product does not exist, use insert into
-                statement = connection.prepareStatement("INSERT INTO products VALUES (?, ?, ?, ?)");
+                statement = connection.prepareStatement("INSERT INTO products (product_id, product_name, quantity, unit_price) VALUES (?, ?, ?, ?)");
                 statement.setString(2, product.getProductName());
-                statement.setDouble(3, product.getProductPrice());
-                statement.setDouble(4, product.getProductQuantity());
+                statement.setDouble(4, product.getProductPrice());
+                statement.setDouble(3, product.getProductQuantity());
                 statement.setInt(1, product.getProductID());
             }
             statement.execute();

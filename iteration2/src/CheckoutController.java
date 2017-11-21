@@ -116,7 +116,7 @@ public class CheckoutController implements ActionListener {
         order = new OrderModel();
         if (dataAdapter.loadOrder(orderId) != null) {
             order = dataAdapter.loadOrder(orderId);
-
+            order.setTotalPrice(0);
             for (OrderLine line: order.getLines()) {
                 Object[] row = new Object[5];
                 row[0] = line.getProductID();
@@ -127,10 +127,12 @@ public class CheckoutController implements ActionListener {
                     row[3] = line.getQuantity();
                     line.setCost(product.getProductPrice()*line.getQuantity());
                     row[4] = line.getCost();
+                    order.setTotalPrice(line.getCost()+order.getTotalPrice());
                  }
                 view.addRow(row);
 
             }
+
             this.view.getTotalLabel().setText("Total: " + order.getTotalPrice());
             view.invalidate();
         }

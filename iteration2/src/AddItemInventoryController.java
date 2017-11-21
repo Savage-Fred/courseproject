@@ -105,7 +105,7 @@ public class AddItemInventoryController implements ActionListener {
             addItemInventoryView.addRow(row);
         }
 
-        addItemInventoryView.validate();
+        addItemInventoryView.invalidate();
 
     }
 
