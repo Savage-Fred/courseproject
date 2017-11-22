@@ -351,6 +351,8 @@ public class Application {
         userSettingsController = new UserSettingsController(userSettingsMenuView, dataAdapter);
 
         cashierMenuController = new CashierMenuController(cashierMenuView, dataAdapter);
+
+
     }
 
 

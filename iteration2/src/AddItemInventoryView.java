@@ -70,6 +70,8 @@ public class AddItemInventoryView extends JFrame {
         panelButton.add(closeButton);
         this.getContentPane().add(panelButton);
 
+
+
     }
 
     public JTextField getItemNameField() {

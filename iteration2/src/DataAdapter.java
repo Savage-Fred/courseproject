@@ -193,7 +193,31 @@ public class DataAdapter {
             }
 
 
-            return (latestSessionID + 1);
+            return (latestSessionID);
+
+        } catch (SQLException e) {
+            System.out.println("Database access error!");
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public int loadNumberOfProduct() {
+        try {
+            int latestSessionID = -1;
+            Statement statement = connection.createStatement();
+
+            // loading the order lines for this order
+            ResultSet resultSet = statement.executeQuery("SELECT product_id FROM products ORDER BY product_id DESC " );
+
+            if (resultSet.next()) {
+                latestSessionID = resultSet.getInt("product_id");
+                System.out.println("Latest session_id : " + latestSessionID);
+
+            }
+
+
+            return (latestSessionID);
 
         } catch (SQLException e) {
             System.out.println("Database access error!");
@@ -211,7 +235,7 @@ public class DataAdapter {
 
             ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet.next()) //User exist, update its fields
+            if (resultSet.next()) //Order exist, update its fields
             {
                 statement = connection.prepareStatement("UPDATE orders SET total_price = ? WHERE order_id = ?");
                 statement.setInt(2, order.getOrderID());
@@ -240,17 +264,15 @@ public class DataAdapter {
                 for(OrderLine line: order.getLines()) {
 
                     if (i > size) {
+                        System.out.println("Executed ");
 
-                    statement.setInt(1, newPIO);
-                    statement.setInt(2, order.getOrderID());
-                    statement.setInt(3, line.getProductID());
-                    statement.setDouble(4, line.getQuantity());
-                    statement.execute();    // commit to the database;
-
+                        statement.setInt(1, newPIO + 1);
+                        statement.setInt(2, order.getOrderID());
+                        statement.setInt(3, line.getProductID());
+                        statement.setDouble(4, line.getQuantity());
+                        statement.execute();    // commit to the database;
                     }
-
                     i++;
-                    newPIO++;
 
                 }
                 statement.close();
@@ -314,6 +336,7 @@ public class DataAdapter {
                 user.setDisplayName(resultSet.getString("fullname"));
                 user.setIsManager(resultSet.getInt("is_manager"));
                 user.setIsSignedIn(resultSet.getInt("is_signed_in"));
+                user.setProfilePicture(resultSet.getString("user_pic_path"));
 
                 //System.out.println(resultSet.getInt("is_manager")
               //      +  "\n" + resultSet.getInt("is_signed_in") );
@@ -342,13 +365,16 @@ public class DataAdapter {
             if (resultSet.next()) //User exist, update its fields
             {
                 statement = connection.prepareStatement("UPDATE users SET username = ?, password = ?, is_manager = ?, user_pic_path = ?, is_signed_in = ? WHERE user_id = ?");
-                statement.setString(1, userInput.getDisplayName());
+                statement.setString(1, userInput.getName());
                 statement.setString(2, userInput.getPassword());
                 statement.setInt(3, userInput.getIsManager());
                 statement.setString(4, userInput.getProfilePicture());
                 statement.setInt(5, userInput.getIsSignedIn());
+                statement.setInt(6, userInput.getUserID());
 
                 System.out.println("Made it here");
+                statement.execute();
+
 
             } else {
                 statement = connection.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?, ?, ? , ?, ?)");
@@ -360,9 +386,10 @@ public class DataAdapter {
                 statement.setInt(6, userInput.getIsManager());
                 statement.setString(7, userInput.getProfilePicture());
                 statement.setInt(8,userInput.getIsSignedIn());
+                statement.execute();
             }
 
-            statement.execute();
+
             resultSet.close();
             statement.close();
             return true;        // save successfully
@@ -447,6 +474,7 @@ public class DataAdapter {
                 user.setDisplayName(resultSet.getString("fullname"));
                 user.setIsManager(resultSet.getInt("is_manager"));
                 user.setIsSignedIn(resultSet.getInt("is_signed_in"));
+                user.setProfilePicture(resultSet.getString("user_pic_path"));
 
 
                 resultSet.close();

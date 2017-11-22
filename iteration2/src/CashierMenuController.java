@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,6 +22,8 @@ public class CashierMenuController implements ActionListener {
     }
     public void updateUserFields() {
         user = dataAdapter.getCurrentUser();
+
+        cashierMenuView.getProfilePicture().setIcon(ResizeImage(user.getProfilePicture()));
 
         cashierMenuView.setJobTitleField(user.getJobTitle());
         cashierMenuView.setUsernameField(user.getName());
@@ -63,5 +67,14 @@ public class CashierMenuController implements ActionListener {
         Application.getInstance().getCashierMenuView().setVisible(false);
 
         dataAdapter.logoutUser();
+    }
+
+    public ImageIcon ResizeImage(String imgPath){
+        ImageIcon MyImage = new ImageIcon(imgPath);
+        Image img = MyImage.getImage();
+        cashierMenuView.getProfilePicture().setBounds(10,10,200,100);
+        Image newImage = img.getScaledInstance(cashierMenuView.getProfilePicture().getWidth(), cashierMenuView.getProfilePicture().getHeight(),Image.SCALE_SMOOTH);
+        ImageIcon image = new ImageIcon(newImage);
+        return image;
     }
 }

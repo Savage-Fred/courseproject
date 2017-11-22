@@ -11,7 +11,7 @@ public class CashierMenuView extends JFrame {
     private JTextField usernameField = new JTextField(10);
     private JTextField jobTitleField = new JTextField( 10);
 
-    private BufferedImage profilePicture;
+    private JLabel profilePicture = new JLabel();
 
     private JButton checkoutButton = new JButton("Checkout");
     private JButton settingsButton = new JButton("Settings");
@@ -20,13 +20,16 @@ public class CashierMenuView extends JFrame {
     public CashierMenuView() {
         this.setTitle("Store Manager");
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
-        this.setSize(500, 200);
-
-        // TODO: Create JPanel for profile picture
+        this.setSize(500, 400);
 
         JPanel panelTitle = new JPanel();
         panelTitle.add(storeLabel);
         this.getContentPane().add(panelTitle);
+
+        JPanel panelPhoto = new JPanel();
+        profilePicture.setBounds(10,10,200,100);
+        panelPhoto.add(profilePicture);
+        this.getContentPane().add(panelPhoto);
 
         JPanel panelUsername = new JPanel();
         panelUsername.add(usernameLabel);
@@ -64,5 +67,9 @@ public class CashierMenuView extends JFrame {
 
     public void setUsernameField(String usernameField) {
         this.usernameField.setText(usernameField);
+    }
+
+    public JLabel getProfilePicture() {
+        return profilePicture;
     }
 }

@@ -59,7 +59,8 @@ public class LoginScreenController implements ActionListener {
                 + "\nName: " + user.getName()
                 + "\nIs Manager: " + user.getIsManager()
                 + "\nFullname: " + user.getDisplayName()
-                + "\nPassword: " + user.getPassword());
+                + "\nPassword: " + user.getPassword()
+                + "\nProfile Picture: " + user.getProfilePicture());
 
 
         if (user.getIsManager() == 1) {

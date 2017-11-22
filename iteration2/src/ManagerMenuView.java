@@ -9,7 +9,7 @@ public class ManagerMenuView extends JFrame {
     private JTextField usernameField = new JTextField(10);
     private JTextField jobTitleField = new JTextField(10);
 
-    private BufferedImage profilePicture;
+    private JLabel profilePicture = new JLabel();
 
     private JButton manageInventoryButton = new JButton("Manage Inventory");
     private JButton reportsButton = new JButton("Reports Menu");
@@ -20,11 +20,16 @@ public class ManagerMenuView extends JFrame {
     public ManagerMenuView() {
         this.setTitle("Store Manager");
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
-        this.setSize(500, 200);
+        this.setSize(500, 400);
 
         JPanel panelTitle = new JPanel();
         panelTitle.add(storeLabel);
         this.getContentPane().add(panelTitle);
+
+        JPanel panelPhoto = new JPanel();
+        profilePicture.setBounds(10,10,200,100);
+        panelPhoto.add(profilePicture);
+        this.getContentPane().add(panelPhoto);
 
         JPanel panelUserInfo = new JPanel();
         panelUserInfo.add(new JLabel("Username: "));
@@ -69,5 +74,9 @@ public class ManagerMenuView extends JFrame {
 
     public void setUsernameField(String usernameField) {
         this.usernameField.setText(usernameField);
+    }
+
+    public JLabel getProfilePicture() {
+        return profilePicture;
     }
 }

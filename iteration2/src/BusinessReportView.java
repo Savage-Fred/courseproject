@@ -9,7 +9,9 @@ public class BusinessReportView extends JFrame {
 
     private JTable currentInventory = new JTable(items);
 
-    private JButton sortByButton = new JButton("Sort By");
+    private JButton sortByUnitsButton = new JButton("Sort By Units Sold");
+    private JButton sortByRevenueButton = new JButton("Sort By Revenue");
+
     private JButton closeButton = new JButton("Close");
 
     public BusinessReportView() {
@@ -31,14 +33,19 @@ public class BusinessReportView extends JFrame {
         this.getContentPane().add(panelOrder);
 
         JPanel panelButton = new JPanel();
-        panelButton.add(sortByButton);
+        panelButton.add(sortByUnitsButton);
+        panelButton.add(sortByRevenueButton);
         panelButton.add(closeButton);
         this.getContentPane().add(panelButton);
 
     }
 
-    public JButton getSortByButton() {
-        return sortByButton;
+    public JButton getSortByUnitsButton() {
+        return sortByUnitsButton;
+    }
+
+    public JButton getSortByRevenueButton() {
+        return sortByRevenueButton;
     }
 
     public JButton getCloseButton() {
@@ -49,4 +56,9 @@ public class BusinessReportView extends JFrame {
         items.addRow(row);              // add a row to list of item!
         items.fireTableDataChanged();
     }
+
+    public void clearTable(){
+        items.setRowCount(0);
+    }
+
 }

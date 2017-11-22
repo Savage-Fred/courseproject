@@ -8,8 +8,7 @@ public class UserSettingsMenuView extends JFrame {
     private JTextField usernameField = new JTextField(10);
     private JTextField jobTitleField = new JTextField(10);
 
-    private BufferedImage profilePicture;
-
+    private JLabel profilePicture = new JLabel();
 
     private JButton changePictureButton = new JButton("Change Picture");
     private JButton changePasswordButton = new JButton("Change Password");
@@ -18,11 +17,16 @@ public class UserSettingsMenuView extends JFrame {
     public UserSettingsMenuView() {
         this.setTitle("Store Manager");
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
-        this.setSize(500, 200);
+        this.setSize(500, 300);
 
         JPanel panelTitle = new JPanel();
         panelTitle.add(userSettingsLabel);
         this.getContentPane().add(panelTitle);
+
+        JPanel panelPhoto = new JPanel();
+        profilePicture.setBounds(10,10,200,100);
+        panelPhoto.add(profilePicture);
+        this.getContentPane().add(panelPhoto);
 
         JPanel panelUserInfo = new JPanel();
         panelUserInfo.add(usernameField);
@@ -57,5 +61,9 @@ public class UserSettingsMenuView extends JFrame {
 
     public void setJobTitleField(String jobTitleField) {
         this.jobTitleField.setText(jobTitleField);
+    }
+
+    public JLabel getProfilePicture() {
+        return profilePicture;
     }
 }

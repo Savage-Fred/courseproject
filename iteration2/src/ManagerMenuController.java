@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,6 +27,9 @@ public class ManagerMenuController implements ActionListener {
 
     public void updateUserFields() {
         user = dataAdapter.getCurrentUser();
+
+        managerMenuView.getProfilePicture().setIcon(ResizeImage(user.getProfilePicture()));
+
 
         managerMenuView.setJobTitleField(user.getJobTitle());
         managerMenuView.setUsernameField(user.getName());
@@ -80,5 +85,14 @@ public class ManagerMenuController implements ActionListener {
         Application.getInstance().getManagerMenuView().setVisible(false);
         dataAdapter.logoutUser();
         Application.getInstance().getLoginScreenView().setVisible(true);
+    }
+
+    public ImageIcon ResizeImage(String imgPath){
+        ImageIcon MyImage = new ImageIcon(imgPath);
+        Image img = MyImage.getImage();
+        managerMenuView.getProfilePicture().setBounds(10,10,200,100);
+        Image newImage = img.getScaledInstance(managerMenuView.getProfilePicture().getWidth(), managerMenuView.getProfilePicture().getHeight(),Image.SCALE_SMOOTH);
+        ImageIcon image = new ImageIcon(newImage);
+        return image;
     }
 }

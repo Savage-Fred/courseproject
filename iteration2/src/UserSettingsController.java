@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -36,6 +38,8 @@ public class UserSettingsController implements ActionListener  {
     public void updateUserFields() {
         user = dataAdapter.getCurrentUser();
 
+        userSettingsMenuView.getProfilePicture().setIcon(ResizeImage(user.getProfilePicture()));
+
         userSettingsMenuView.setJobTitleField(user.getJobTitle());
         userSettingsMenuView.setUsernameField(user.getName());
 
@@ -58,12 +62,23 @@ public class UserSettingsController implements ActionListener  {
 
         if (dataAdapter.getCurrentUser().getIsManager() == 0 || dataAdapter.getCurrentUser().getIsManager() == 1) {
             if (dataAdapter.getCurrentUser().getIsManager() == 1) {
+                Application.getInstance().getManagerMenuController().updateUserFields();
                 Application.getInstance().getManagerMenuView().setVisible(true);
             } else {
+                Application.getInstance().getCashierMenuController().updateUserFields();
                 Application.getInstance().getCashierMenuView().setVisible(true);
 
             }
         }
+    }
+
+    public ImageIcon ResizeImage(String imgPath){
+        ImageIcon MyImage = new ImageIcon(imgPath);
+        Image img = MyImage.getImage();
+        userSettingsMenuView.getProfilePicture().setBounds(10,10,200,100);
+        Image newImage = img.getScaledInstance(userSettingsMenuView.getProfilePicture().getWidth(), userSettingsMenuView.getProfilePicture().getHeight(),Image.SCALE_SMOOTH);
+        ImageIcon image = new ImageIcon(newImage);
+        return image;
     }
 
 }
