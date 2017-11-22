@@ -226,6 +226,30 @@ public class DataAdapter {
         }
     }
 
+    public int loadNumberOfOrders() {
+        try {
+            int latestSessionID = -1;
+            Statement statement = connection.createStatement();
+
+            // loading the order lines for this order
+            ResultSet resultSet = statement.executeQuery("SELECT order_id FROM orders ORDER BY order_id DESC " );
+
+            if (resultSet.next()) {
+                latestSessionID = resultSet.getInt("order_id");
+                System.out.println("Latest session_id : " + latestSessionID);
+
+            }
+
+
+            return (latestSessionID);
+
+        } catch (SQLException e) {
+            System.out.println("Database access error!");
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
 
         public boolean saveOrder(OrderModel order) {
         try {
@@ -264,9 +288,7 @@ public class DataAdapter {
                 for(OrderLine line: order.getLines()) {
 
                     if (i > size) {
-                        System.out.println("Executed ");
-
-                        statement.setInt(1, newPIO + 1);
+                        statement.setInt(1, (newPIO+1));
                         statement.setInt(2, order.getOrderID());
                         statement.setInt(3, line.getProductID());
                         statement.setDouble(4, line.getQuantity());
@@ -291,7 +313,7 @@ public class DataAdapter {
                 statement.close();
 
                 statement = connection.prepareStatement("INSERT INTO products_in_order VALUES (?, ?, ?, ?)");
-                int newPIO = loadProductInOrder();
+                int newPIO = loadProductInOrder() + 1;
 
 
                 for (OrderLine line : order.getLines()) { // store for each order line!
@@ -372,7 +394,6 @@ public class DataAdapter {
                 statement.setInt(5, userInput.getIsSignedIn());
                 statement.setInt(6, userInput.getUserID());
 
-                System.out.println("Made it here");
                 statement.execute();
 
 

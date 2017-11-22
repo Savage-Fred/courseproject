@@ -56,11 +56,8 @@ public class OrderSelectionController implements ActionListener{
     public void createNewOrder() {
         Application.getInstance().getCheckoutView().clearTable();
         Application.getInstance().getCheckoutView().setVisible(true);
-        int newOrderId = 0;
-        for(int i = 1; dataAdapter.loadOrder(i) != null; i++) {
-            newOrderId = i;
-        }
-        Application.getInstance().getCheckoutController().setCurrentOrderId(newOrderId);
+        int newOrderId = dataAdapter.loadNumberOfOrders();
+        Application.getInstance().getCheckoutController().setCurrentOrderId((newOrderId+1));
         Application.getInstance().getOrderSelectionView().setVisible(false);
     }
 

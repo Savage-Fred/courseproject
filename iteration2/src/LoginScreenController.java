@@ -55,13 +55,13 @@ public class LoginScreenController implements ActionListener {
             return;
         }
 
-        System.out.println( "User ID: " + user.getUserID()
+        /*System.out.println( "User ID: " + user.getUserID()
                 + "\nName: " + user.getName()
                 + "\nIs Manager: " + user.getIsManager()
                 + "\nFullname: " + user.getDisplayName()
                 + "\nPassword: " + user.getPassword()
                 + "\nProfile Picture: " + user.getProfilePicture());
-
+        */
 
         if (user.getIsManager() == 1) {
 

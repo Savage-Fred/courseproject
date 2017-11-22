@@ -69,13 +69,13 @@ public class PhotoSettingsController implements ActionListener {
         user.setProfilePicture(newPhotoUrl);
 
 
-        System.out.println( "User ID: " + user.getUserID()
+        /*System.out.println( "User ID: " + user.getUserID()
                 + "\nName: " + user.getName()
                 + "\nIs Manager: " + user.getIsManager()
                 + "\nFullname: " + user.getDisplayName()
                 + "\nPassword: " + user.getPassword()
                 + "\nProfile Picture: " + user.getProfilePicture());
-
+        */
 
         if (dataAdapter.saveUser(user)) {
             dataAdapter.saveUser(user);

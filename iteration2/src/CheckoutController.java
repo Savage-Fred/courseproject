@@ -70,6 +70,8 @@ public class CheckoutController implements ActionListener {
                 return;
             }
 
+            order.setOrderID(currentOrderId);
+
 
 
             OrderLine line = new OrderLine();
@@ -92,8 +94,6 @@ public class CheckoutController implements ActionListener {
             row[2] = product.getProductPrice();
             row[3] = line.getQuantity();
             row[4] = line.getCost();
-
-            order.setOrderID(currentOrderId);
 
             dataAdapter.saveOrder(order);
 
